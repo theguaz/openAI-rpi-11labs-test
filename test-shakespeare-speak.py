@@ -102,7 +102,7 @@ def create_video_from_image_and_audio(image_path, audio_path, output_video_path)
         command = [
             'ffmpeg',
             '-loop', '1',
-            '-framerate', '25',
+            '-framerate', '2',
             '-i', image_path,
             '-i', audio_path,
             '-c:v', 'libx264',

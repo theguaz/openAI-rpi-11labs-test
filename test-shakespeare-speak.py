@@ -6,7 +6,7 @@ import time
 import os
 import datetime
 import uuid
-
+import subprocess
 #create your config accordingly:
 #api_key = "your_api_key_here"
 #elevenLabsAPiKey = "your_elevenLabs_api_key_here"
@@ -44,7 +44,7 @@ def save_log(message):
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         log_file.write(f"{timestamp} - {message}\n")
 
-def write_text_on_image(image_path, text, position=(10, 10), font_size=75, font_color="red"):
+def write_text_on_image(image_path, text, position=(10, 10), font_size=150, font_color="white"):
 
     try:
         # Open the image
@@ -97,6 +97,28 @@ def getImageInfo(image_path):
     msg = openAI_response.json()
     return msg['choices'][0]['message']['content']
 
+def create_video_from_image_and_audio(image_path, audio_path, output_video_path):
+    try:
+        command = [
+            'ffmpeg',
+            '-loop', '1',
+            '-framerate', '1',
+            '-i', image_path,
+            '-i', audio_path,
+            '-c:v', 'libx264',
+            '-tune', 'stillimage',
+            '-c:a', 'aac',
+            '-b:a', '192k',
+            '-shortest',
+            '-pix_fmt', 'yuv420p',
+            output_video_path
+        ]
+
+        subprocess.run(command, check=True)
+        print(f"Video created successfully: {output_video_path}")
+    except subprocess.CalledProcessError as e:
+        print(f"Error occurred: {e}")
+
 def capture_image(uuid, save_dir="/home/pi/openAI-rpi-11labs-test/captures"):
     # Ensure the save directory exists
     if not os.path.exists(save_dir):
@@ -141,5 +163,5 @@ if __name__ == "__main__":
     time.sleep(3)
     captured_image_path = capture_image(uuid)
     process = process_image(captured_image_path, uuid)
-
+    create_video_from_image_and_audio(captured_image_path, process[1], 'videos/' + uuid + ".mp4" )
     print("task completed...")

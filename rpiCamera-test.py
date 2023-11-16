@@ -2,7 +2,7 @@ import picamera
 import time
 import os
 
-def capture_image(save_dir="/home/pi/captured_images"):
+def capture_image(save_dir="/home/pi/openAI-rpi-11labs-test/captures"):
     # Ensure the save directory exists
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)

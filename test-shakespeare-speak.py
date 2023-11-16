@@ -97,13 +97,13 @@ def getImageInfo(image_path):
     msg = openAI_response.json()
     return msg['choices'][0]['message']['content']
 
-def capture_image(save_dir="/home/pi/openAI-rpi-11labs-test/captures"):
+def capture_image(uuid, save_dir="/home/pi/openAI-rpi-11labs-test/captures"):
     # Ensure the save directory exists
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
 
     # Create a file name based on the current time
-    file_name = time.strftime("%Y%m%d-%H%M%S") + ".jpg"
+    file_name = uuid + ".jpg"
     file_path = os.path.join(save_dir, file_name)
 
     # Capture the image
@@ -117,7 +117,7 @@ def capture_image(save_dir="/home/pi/openAI-rpi-11labs-test/captures"):
 
     return file_path
 
-def process_image(filename):
+def process_image(filename, uuid):
   info = getImageInfo(filename)
   logInfo = filename + " ---> " + info + "\n\n"
   write_text_on_image(filename, logInfo)
@@ -126,7 +126,7 @@ def process_image(filename):
   audiogen = generate(text = 'Ok, this is what I see on the image:' + info, voice=voice_id)
   
 
-  nameOf = str( uuid.uuid4() )
+  nameOf = uuid
   
   input_audio_path = "audios/" + nameOf + '_answer.wav'
   print("playing msg \n\n")
@@ -137,8 +137,9 @@ def process_image(filename):
 
 if __name__ == "__main__":
     print("sleeping 3 secs")
+    uuid = str( uuid.uuid4() )
     time.sleep(3)
-    captured_image_path = capture_image()
-    process = process_image(captured_image_path)
+    captured_image_path = capture_image(uuid)
+    process = process_image(uuid, captured_image_path)
 
     print("task completed...")

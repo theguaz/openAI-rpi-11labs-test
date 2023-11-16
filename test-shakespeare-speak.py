@@ -1,7 +1,9 @@
 import base64
 import requests
 import os
+import picamera
 import time
+import os
 import datetime
 import uuid
 
@@ -95,7 +97,25 @@ def getImageInfo(image_path):
     msg = openAI_response.json()
     return msg['choices'][0]['message']['content']
 
+def capture_image(save_dir="/home/pi/openAI-rpi-11labs-test/captures"):
+    # Ensure the save directory exists
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
 
+    # Create a file name based on the current time
+    file_name = time.strftime("%Y%m%d-%H%M%S") + ".jpg"
+    file_path = os.path.join(save_dir, file_name)
+
+    # Capture the image
+    with picamera.PiCamera() as camera:
+        camera.resolution = (1024, 768)  # You can adjust the resolution
+        camera.start_preview()
+        # Camera warm-up time
+        time.sleep(2)
+        camera.capture(file_path)
+        print(f"Image captured and saved as {file_path}")
+
+    return file_path
 
 def process_image(filename):
   info = getImageInfo(filename)
@@ -114,4 +134,5 @@ def process_image(filename):
   return info , input_audio_path
 
 if __name__ == "__main__":
-    process = process_image("./test-sh-img.jpg")
+    captured_image_path = capture_image()
+    process = process_image(captured_image_path)

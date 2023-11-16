@@ -165,5 +165,5 @@ if __name__ == "__main__":
     time.sleep(3)
     captured_image_path = capture_image(uuid)
     process = process_image(captured_image_path, uuid)
-    create_video_from_image_and_audio(captured_image_path, process[1], 'videos/' + uuid + ".mp4" )
-    print("task completed...")
+    #create_video_from_image_and_audio(captured_image_path, process[1], 'videos/' + uuid + ".mp4" )
+    print("task completed for UUID..." + uuid)

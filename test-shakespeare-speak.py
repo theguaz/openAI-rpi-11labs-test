@@ -44,7 +44,7 @@ def save_log(message):
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         log_file.write(f"{timestamp} - {message}\n")
 
-def write_text_on_image(image_path, text, position=(10, 10), font_size=150, font_color="white"):
+def write_text_on_image(image_path, text, position=(10, 10), font_size=10, font_color="white"):
 
     try:
         # Open the image

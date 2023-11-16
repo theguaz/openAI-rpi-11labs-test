@@ -44,7 +44,7 @@ def save_log(message):
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         log_file.write(f"{timestamp} - {message}\n")
 
-def write_text_on_image(image_path, text, position=(10, 10), font_size=10, font_color="white"):
+def write_text_on_image(image_path, text, position=(10, 10), font_size=5, font_color="white"):
 
     try:
         # Open the image
@@ -130,10 +130,12 @@ def capture_image(uuid, save_dir="/home/pi/openAI-rpi-11labs-test/captures"):
 
     # Capture the image
     with picamera.PiCamera() as camera:
-        camera.resolution = (1024, 768)  # You can adjust the resolution
+        camera.resolution = (1280, 720)  # You can adjust the resolution
+        camera.hflip = True
         camera.start_preview()
         # Camera warm-up time
-        time.sleep(2)
+        print("warming camera")
+        time.sleep(3)
         camera.capture(file_path)
         print(f"Image captured and saved as {file_path}")
 

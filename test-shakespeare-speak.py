@@ -136,6 +136,8 @@ def process_image(filename):
   return info , input_audio_path
 
 if __name__ == "__main__":
+    print("sleeping 3 secs")
+    time.sleep(3)
     captured_image_path = capture_image()
     process = process_image(captured_image_path)
 

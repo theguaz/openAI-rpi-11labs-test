@@ -140,6 +140,6 @@ if __name__ == "__main__":
     uuid = str( uuid.uuid4() )
     time.sleep(3)
     captured_image_path = capture_image(uuid)
-    process = process_image(uuid, captured_image_path)
+    process = process_image(captured_image_path, uuid)
 
     print("task completed...")

@@ -5,6 +5,13 @@ import time
 import datetime
 import uuid
 
+#create your config accordingly:
+#api_key = "your_api_key_here"
+#elevenLabsAPiKey = "your_elevenLabs_api_key_here"
+#voice_id = "your_voice_id_here"
+
+import config
+
 import sys
 
 from openai import OpenAI
@@ -15,8 +22,12 @@ from elevenlabs import generate, play, voices, save
 from elevenlabs import set_api_key
 
 # OpenAI API Key
-api_key = "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"
-elevenLabsAPiKey = "2eeba282efdfbb57c6455193dc5ac4cd"
+
+api_key = config.api_key
+elevenLabsAPiKey = config.elevenLabsAPiKey
+voice_id = config.voice_id
+
+print(elevenLabsAPiKey)
 
 set_api_key(elevenLabsAPiKey)
 
@@ -93,7 +104,7 @@ def process_image(filename):
   write_text_on_image(filename, logInfo)
   save_log(logInfo)
   print("generating audio with elevenLabs")
-  audiogen = generate(text = 'Ok, this is what I see on the image:' + info, voice="ben-take-1")
+  audiogen = generate(text = 'Ok, this is what I see on the image:' + info, voice=voice_id)
   
 
   nameOf = str( uuid.uuid4() )
@@ -104,4 +115,4 @@ def process_image(filename):
   return info , input_audio_path
 
 if __name__ == "__main__":
-    process = process_image("/Users/luisguajardo/Desktop/WORK/test-sh-img.jpg")
+    process = process_image("./test-sh-img.jpg")

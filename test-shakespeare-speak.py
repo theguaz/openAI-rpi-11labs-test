@@ -128,7 +128,7 @@ def process_image(filename):
 
   nameOf = str( uuid.uuid4() )
   
-  input_audio_path = nameOf + '_answer.wav'
+  input_audio_path = "audios/" + nameOf + '_answer.wav'
   print("playing msg \n\n")
   play(audiogen)
   print("saving msg \n\n")

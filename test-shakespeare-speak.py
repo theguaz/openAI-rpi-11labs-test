@@ -127,12 +127,16 @@ def process_image(filename):
   
 
   nameOf = str( uuid.uuid4() )
-  print("saving voice \n\n")
+  
   input_audio_path = nameOf + '_answer.wav'
+  print("playing msg \n\n")
   play(audiogen)
+  print("saving msg \n\n")
   save(audiogen, input_audio_path )
   return info , input_audio_path
 
 if __name__ == "__main__":
     captured_image_path = capture_image()
     process = process_image(captured_image_path)
+
+    print("task completed...")

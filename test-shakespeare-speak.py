@@ -27,7 +27,6 @@ api_key = config.api_key
 elevenLabsAPiKey = config.elevenLabsAPiKey
 voice_id = config.voice_id
 
-print(elevenLabsAPiKey)
 
 set_api_key(elevenLabsAPiKey)
 

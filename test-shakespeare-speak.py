@@ -29,6 +29,7 @@ api_key = config.api_key
 elevenLabsAPiKey = config.elevenLabsAPiKey
 voice_id = config.voice_id
 
+isProcessing = False
 
 set_api_key(elevenLabsAPiKey)
 
@@ -161,13 +162,15 @@ def process_image(filename, uuidID):
 
 
 def triggered_function():
+  isProcessing = True
   print("shooting....")
   uuidID = str( uuid.uuid4() )
   time.sleep(1)
   captured_image_path = capture_image(uuidID)
   process = process_image(captured_image_path, uuidID)
-  #create_video_from_image_and_audio(captured_image_path, process[1], 'videos/' + uuid + ".mp4" )
+  create_video_from_image_and_audio(captured_image_path, process[1], 'videos/' + uuid + ".mp4" )
   print("task completed for UUID..." + uuidID)
+  isProcessing = False
 
 
 
@@ -179,7 +182,7 @@ if __name__ == "__main__":
 try:
     while True:
         button_state = GPIO.input(14)
-        if button_state == False:  # Button is pressed
+        if button_state == False and isProcessing == False:  # Button is pressed
             triggered_function()
             time.sleep(0.2)  # Add a small delay to debounce
 

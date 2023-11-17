@@ -159,10 +159,12 @@ def process_image(filename, uuidID):
   
   input_audio_path = "audios/" + nameOf + '_answer.wav'
   print("playing msg \n\n")
-  play(audiogen)
   print("saving msg \n\n")
   save(audiogen, input_audio_path )
-  return info , input_audio_path
+  
+  
+  
+  return info , input_audio_path, audiogen
 
 
 def triggered_function():
@@ -178,6 +180,8 @@ def triggered_function():
   end_time = time.time()
   elapsed_time = end_time - start_time
   print("task completed for UUID--> " + uuidID + " in exactly " + str(elapsed_time) + " secs")
+
+  play(process[2])
   isProcessing = False
 
 

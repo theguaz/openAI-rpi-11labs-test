@@ -173,7 +173,7 @@ def triggered_function():
   time.sleep(1)
   captured_image_path = capture_image(uuidID)
   process = process_image(captured_image_path, uuidID)
-  create_video_from_image_and_audio(captured_image_path, process[1], 'videos/' + uuidID + ".mp4" )
+  #create_video_from_image_and_audio(captured_image_path, process[1], 'videos/' + uuidID + ".mp4" )
   
   end_time = time.time()
   elapsed_time = end_time - start_time

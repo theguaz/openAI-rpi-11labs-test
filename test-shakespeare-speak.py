@@ -177,7 +177,7 @@ if __name__ == "__main__":
 
 try:
     while True:
-        button_state = GPIO.input(17)
+        button_state = GPIO.input(14)
         if button_state == False:  # Button is pressed
             triggered_function()
             time.sleep(0.2)  # Add a small delay to debounce

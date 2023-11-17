@@ -119,13 +119,13 @@ def create_video_from_image_and_audio(image_path, audio_path, output_video_path)
     except subprocess.CalledProcessError as e:
         print(f"Error occurred: {e}")
 
-def capture_image(uuid, save_dir="/home/pi/openAI-rpi-11labs-test/captures"):
+def capture_image(uuidID, save_dir="/home/pi/openAI-rpi-11labs-test/captures"):
     # Ensure the save directory exists
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
 
     # Create a file name based on the current time
-    file_name = uuid + ".jpg"
+    file_name = uuidID + ".jpg"
     file_path = os.path.join(save_dir, file_name)
 
     # Capture the image
@@ -141,7 +141,7 @@ def capture_image(uuid, save_dir="/home/pi/openAI-rpi-11labs-test/captures"):
 
     return file_path
 
-def process_image(filename, uuid):
+def process_image(filename, uuidID):
   info = getImageInfo(filename)
   logInfo = filename + " ---> " + info + "\n\n"
   write_text_on_image(filename, logInfo)
@@ -150,7 +150,7 @@ def process_image(filename, uuid):
   audiogen = generate(text = 'Ok, this is what I see on the image:' + info, voice=voice_id)
   
 
-  nameOf = uuid
+  nameOf = uuidID
   
   input_audio_path = "audios/" + nameOf + '_answer.wav'
   print("playing msg \n\n")
@@ -162,16 +162,17 @@ def process_image(filename, uuid):
 
 def triggered_function():
   print("shooting....")
-  uuid = str( uuid.uuid4() )
+  uuidID = str( uuid.uuid4() )
   time.sleep(1)
-  captured_image_path = capture_image(uuid)
-  process = process_image(captured_image_path, uuid)
+  captured_image_path = capture_image(uuidID)
+  process = process_image(captured_image_path, uuidID)
   #create_video_from_image_and_audio(captured_image_path, process[1], 'videos/' + uuid + ".mp4" )
-  print("task completed for UUID..." + uuid)
+  print("task completed for UUID..." + uuidID)
 
 
 
 if __name__ == "__main__":
+    print("initializing shakespeare camera") 
     GPIO.setmode(GPIO.BCM)  # Use Broadcom pin numbering
     GPIO.setup(14, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Button to GPIO17
 

@@ -13,7 +13,7 @@ import subprocess
 #voice_id = "your_voice_id_here"
 
 import config
-
+import RPi.GPIO as GPIO
 import sys
 
 from openai import OpenAI
@@ -159,11 +159,28 @@ def process_image(filename, uuid):
   save(audiogen, input_audio_path )
   return info , input_audio_path
 
+
+def triggered_function():
+  print("shooting....")
+  uuid = str( uuid.uuid4() )
+  time.sleep(1)
+  captured_image_path = capture_image(uuid)
+  process = process_image(captured_image_path, uuid)
+  #create_video_from_image_and_audio(captured_image_path, process[1], 'videos/' + uuid + ".mp4" )
+  print("task completed for UUID..." + uuid)
+
+
+
 if __name__ == "__main__":
-    print("sleeping 3 secs")
-    uuid = str( uuid.uuid4() )
-    time.sleep(3)
-    captured_image_path = capture_image(uuid)
-    process = process_image(captured_image_path, uuid)
-    #create_video_from_image_and_audio(captured_image_path, process[1], 'videos/' + uuid + ".mp4" )
-    print("task completed for UUID..." + uuid)
+    GPIO.setmode(GPIO.BCM)  # Use Broadcom pin numbering
+    GPIO.setup(14, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Button to GPIO17
+
+try:
+    while True:
+        button_state = GPIO.input(17)
+        if button_state == False:  # Button is pressed
+            triggered_function()
+            time.sleep(0.2)  # Add a small delay to debounce
+
+finally:
+    GPIO.cleanup()  # Clean up GPIO on normal exit

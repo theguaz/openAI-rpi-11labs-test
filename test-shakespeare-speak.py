@@ -177,7 +177,7 @@ def triggered_function():
   
   end_time = time.time()
   elapsed_time = end_time - start_time
-  print("task completed for UUID... in " + uuidID + str(elapsed_time) + " secs")
+  print("task completed for UUID--> " + uuidID + " in exactly " + str(elapsed_time) + " secs")
   isProcessing = False
 
 

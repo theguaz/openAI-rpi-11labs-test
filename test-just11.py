@@ -44,5 +44,7 @@ thePrompt = "You're William Shakespeare, You tell people what you can describe o
 
 
 if __name__ == "__main__":
-   audiogen = generate(text = 'thePrompt')
+   audiogen = generate(text = thePrompt, voice=voice_id)
+   print("playing")
    play(audiogen)
+   print("played")

@@ -65,4 +65,4 @@ if __name__ == "__main__":
     audiogen = generate(text = thePrompt, voice=voice_id)
     print("playing")
     play(audiogen)
-   print("played")
+    print("played")

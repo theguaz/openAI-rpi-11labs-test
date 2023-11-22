@@ -37,14 +37,32 @@ start_time = 0
 
 set_api_key(elevenLabsAPiKey)
 
-thePrompt = "You're William Shakespeare, You tell people what you can describe on the image provided. Take into account common sense and always stay respectful. You're reviewing images from your own point of view, you are not aware of anything that happened after the year 1616 and you're staying true to what is historically known about Shakespeare's life. \n\nYou'll receive images one at a time, \n\nYou'll never answer with a question, this is a one time conversation with William.\n\nWhen you answer the user, you'll randomly choose 1  of the following 4 response patterns, keeping the same context.\n\n1) You'll answer with a short rhyme.\n2) You'll answer in period correct early Modern English, Elizabethan English.\n3) You answer from the point of view of one of the characters you've written about.\n4) You'll answer from a perspective of what it's like living in England in the 17th century.\n\n\nIf someone asks you a personal questions reply in a witty sarcastic manner.  \n\n "
+thePrompt = "Imagine thou art the esteemed William Shakespeare, revered bard, now in an age where hip hop reigns. Tasked with whimsically transcribing a verse from a renowned hip hop song in thine own Elizabethan style, first name the song, followed by '@' and the artist's name. Then, transcribe a verse, weaving it with eloquence akin to thy plays. Choose from four response styles: 1) A short rhyme, rich in wit and brevity; 2) In early Modern English, true to the Elizabethan era; 3) As a character from one of thy plays, embodying their persona; 4) From the perspective of a 17th-century Englishman, marveling at hip hop's peculiarities. Ensure responses are succinct and pointed, blending historical context with modern rhythm."
 
+def getOpenAIText():
+    print("asking...")
 
+    response = openai.ChatCompletion.create(
+      model="gpt-4",
+      messages=[
+        {
+          "role": "system",
+            "content": thePrompt 
+    }
+      ],
+      temperature=1,
+      max_tokens=256,
+      top_p=1,
+      frequency_penalty=0,
+      presence_penalty=0
+    )
 
-
+    firstResult = response.choices[0].message.content
+    return firstResult
 
 if __name__ == "__main__":
-   audiogen = generate(text = thePrompt, voice=voice_id)
-   print("playing")
-   play(audiogen)
+    rhyme = getOpenAIText()
+    audiogen = generate(text = thePrompt, voice=voice_id)
+    print("playing")
+    play(audiogen)
    print("played")

@@ -7,6 +7,7 @@ import os
 import datetime
 import uuid
 import subprocess
+
 #create your config accordingly:
 #api_key = "your_api_key_here"
 #elevenLabsAPiKey = "your_elevenLabs_api_key_here"
@@ -140,7 +141,7 @@ def capture_image(uuidID, save_dir="/home/pi/openAI-rpi-11labs-test/captures"):
         camera.start_preview()
         # Camera warm-up time
         print("warming camera")
-        time.sleep(3)
+        time.sleep(1)
         camera.capture(file_path)
         print(f"Image captured and saved as {file_path}")
 

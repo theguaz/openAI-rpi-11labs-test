@@ -21,7 +21,7 @@ from openai import OpenAI
 from PIL import Image, ImageDraw, ImageFont
 
 import openai
-from elevenlabs import generate, play, voices, save
+from elevenlabs import generate, play, stream, voices, save
 from elevenlabs import set_api_key
 
 # OpenAI API Key
@@ -153,7 +153,7 @@ def process_image(filename, uuidID):
   write_text_on_image(filename, logInfo)
   save_log(logInfo)
   print("generating audio with elevenLabs")
-  audiogen = generate(text = 'Ok, this is what I see on the image:' + info, voice=voice_id)
+  audiogen = generate(text = 'Ok, this is what I see on the image:' + info, voice=voice_id, stream=True)
   
 
   nameOf = uuidID
@@ -182,7 +182,7 @@ def triggered_function():
   elapsed_time = end_time - start_time
   print("task completed for UUID--> " + uuidID + " in exactly " + str(elapsed_time) + " secs")
 
-  play(process[2])
+  stream(process[2])
   isProcessing = False
 
 

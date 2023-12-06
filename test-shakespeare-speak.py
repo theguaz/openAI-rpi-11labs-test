@@ -138,6 +138,7 @@ def capture_image(uuidID, save_dir="/home/pi/openAI-rpi-11labs-test/captures"):
     with picamera.PiCamera() as camera:
         camera.resolution = (1280, 720)  # You can adjust the resolution
         camera.hflip = True
+        camera.rotation = 90
         camera.start_preview()
         # Camera warm-up time
         print("warming camera")

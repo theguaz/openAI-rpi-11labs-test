@@ -28,7 +28,7 @@ from elevenlabs import set_api_key
 import pygame
 pygame.init()
 
-shutterSound = pygame.mixer.Sound('shutter.wav')
+shutterSound = pygame.mixer.Sound('~/openAI-rpi-11labs-test/shutter.wav')
 
 # OpenAI API Key
 

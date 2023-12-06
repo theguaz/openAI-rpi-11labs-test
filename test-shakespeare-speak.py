@@ -12,6 +12,8 @@ import subprocess
 #api_key = "your_api_key_here"
 #elevenLabsAPiKey = "your_elevenLabs_api_key_here"
 #voice_id = "your_voice_id_here"
+from playsound import playsound
+
 
 import config
 import RPi.GPIO as GPIO
@@ -172,7 +174,8 @@ def process_image(filename, uuidID):
 
 
 def triggered_function():
-  play('~/openAI-rpi-11labs-test/shutter.wav')
+
+  playsound('~/openAI-rpi-11labs-test/shutter.wav')
 
   start_time = time.time()
   isProcessing = True

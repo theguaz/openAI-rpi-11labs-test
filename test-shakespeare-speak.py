@@ -175,7 +175,7 @@ def process_image(filename, uuidID):
 
 def triggered_function():
 
-  playsound('~/openAI-rpi-11labs-test/shutter.wav')
+  playsound('/home/pi/openAI-rpi-11labs-test/shutter.wav')
 
   start_time = time.time()
   isProcessing = True

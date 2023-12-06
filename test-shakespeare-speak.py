@@ -161,7 +161,7 @@ def process_image(filename, uuidID):
   input_audio_path = "audios/" + nameOf + '_answer.wav'
   print("playing msg \n\n")
   print("saving msg \n\n")
-  save(audiogen, input_audio_path )
+  #save(audiogen, input_audio_path )
   
   
   

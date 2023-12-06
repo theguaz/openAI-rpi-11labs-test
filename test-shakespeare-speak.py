@@ -25,13 +25,6 @@ from elevenlabs import generate, play, stream, voices, save
 from elevenlabs import set_api_key
 
 
-import pygame
-
-from pygame import mixer
-
-pygame.init()
-
-shutterSound = pygame.mixer.Sound('~/openAI-rpi-11labs-test/shutter.wav')
 
 # OpenAI API Key
 
@@ -179,7 +172,7 @@ def process_image(filename, uuidID):
 
 
 def triggered_function():
-  shutterSound.play()
+  play('~/openAI-rpi-11labs-test/shutter.wav')
 
   start_time = time.time()
   isProcessing = True

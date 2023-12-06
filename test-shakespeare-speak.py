@@ -153,7 +153,7 @@ def process_image(filename, uuidID):
   write_text_on_image(filename, logInfo)
   save_log(logInfo)
   print("generating audio with elevenLabs")
-  audiogen = generate(text = 'Ok, this is what I see on the image:' + info, voice=voice_id, stream=True)
+  audiogen = generate(text = 'Ok, this is what I see on the image:' + info, voice=voice_id)
   
 
   nameOf = uuidID
@@ -161,7 +161,7 @@ def process_image(filename, uuidID):
   input_audio_path = "audios/" + nameOf + '_answer.wav'
   print("playing msg \n\n")
   print("saving msg \n\n")
-  #save(audiogen, input_audio_path )
+  save(audiogen, input_audio_path )
   
   
   
@@ -182,7 +182,7 @@ def triggered_function():
   elapsed_time = end_time - start_time
   print("task completed for UUID--> " + uuidID + " in exactly " + str(elapsed_time) + " secs")
 
-  stream(process[2])
+  play(process[2])
   isProcessing = False
 
 

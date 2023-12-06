@@ -191,7 +191,7 @@ def triggered_function():
 if __name__ == "__main__":
     print("initializing shakespeare camera") 
     time.sleep(2)
-    triggered_function()
+    #triggered_function()
     time.sleep(1)
     
     GPIO.setmode(GPIO.BCM)  # Use Broadcom pin numbering

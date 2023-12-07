@@ -1,35 +1,55 @@
-import time
-from rpi_ws281x import PixelStrip, Color
+import socket
+from rpi_ws281x import *
 
-# LED strip configuration:
-LED_COUNT = 7        # Number of LED pixels
-LED_PIN = 10          # GPIO pin connected to the pixels (18 uses PWM)
-LED_FREQ_HZ = 800000  # LED signal frequency in hertz
-LED_DMA = 10          # DMA channel to use for generating signal
+# LED strip configuration
+LED_COUNT = 16      # Number of LED pixels.
+LED_PIN = 12        # GPIO pin connected to the pixels (must support PWM!).
+LED_FREQ_HZ = 800000  # LED signal frequency in hertz (usually 800khz)
+LED_DMA = 10       # DMA channel to use for generating signal (try 10)
 LED_BRIGHTNESS = 255  # Set to 0 for darkest and 255 for brightest
-LED_INVERT = False    # True to invert the signal
+LED_INVERT = False   # True to invert the signal (when using NPN transistor level shift)
 
-# Create NeoPixel object
-strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
+# Create NeoPixel object with appropriate configuration.
+strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
 strip.begin()
 
-try:
-    while True:
-        # Example: cycle colors
-        for i in range(strip.numPixels()):
-            strip.setPixelColor(i, Color(255, 0, 0))  # Red color
-            strip.show()
-            time.sleep(0.5)
-        for i in range(strip.numPixels()):
-            strip.setPixelColor(i, Color(0, 255, 0))  # Green color
-            strip.show()
-            time.sleep(0.5)
-        for i in range(strip.numPixels()):
-            strip.setPixelColor(i, Color(0, 0, 255))  # Blue color
-            strip.show()
-            time.sleep(0.5)
-except KeyboardInterrupt:
-    # Clear the color of all pixels to turn them off
+def light_control(message):
+    """ Change the LED light based on the message """
+    if message == 'sht':
+        # Example: Turn on the LED in red
+        color = Color(255, 0, 0)  # Red
+    elif message == 'ask':
+        # Example: Turn on the LED in green
+        color = Color(0, 255, 0)  # Green
+    elif message == 'spk':
+        # Example: Turn on the LED in blue
+        color = Color(0, 0, 255)  # Blue
+    elif message == 'done':
+        # Example: Turn off the LED
+        color = Color(0, 0, 0)  # Off
+    else:
+        return
+
     for i in range(strip.numPixels()):
-        strip.setPixelColor(i, Color(0, 0, 0))
-    strip.show()
+        strip.setPixelColor(i, color)
+        strip.show()
+
+def start_client():
+    host = 'localhost'
+    port = 12345
+
+    client_socket = socket.socket()
+    client_socket.connect((host, port))
+
+    try:
+        while True:
+            data = client_socket.recv(1024).decode()
+            if not data:
+                break
+            print("Received from server: " + data)
+            light_control(data)
+    except KeyboardInterrupt:
+        client_socket.close()
+
+if __name__ == '__main__':
+    start_client()

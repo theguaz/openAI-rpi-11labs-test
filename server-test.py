@@ -33,6 +33,7 @@ def start_server():
     except KeyboardInterrupt:
         print("Keyboard interrupt received, shutting down.")
         try:
+            print("wtfffffff")
             conn.send('shtd'.encode())  # Send shutdown command to client
         finally:
             time.sleep(1)

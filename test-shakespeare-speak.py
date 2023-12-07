@@ -175,7 +175,7 @@ def capture_image(uuidID, save_dir="/home/pi/openAI-rpi-11labs-test/captures"):
 def process_image(filename, uuidID):
   info = getImageInfo(filename)
   global connection
-  
+
   connection.send(msgs[1].encode())
   logInfo = filename + " ---> " + info + "\n\n"
   write_text_on_image(filename, logInfo)
@@ -239,3 +239,5 @@ try:
 
 finally:
     GPIO.cleanup()  # Clean up GPIO on normal exit
+    global connection
+    connection.close() 

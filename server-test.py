@@ -15,21 +15,27 @@ def start_server():
     script_path = '/home/pi/openAI-rpi-11labs-test/test-neopixel.py' 
     subprocess.Popen(['sudo', 'python3', script_path])
 
-    conn, addr = server_socket.accept()
-    print(f"Connection from: {addr}")
-
     try:
+        # Wait for the client to connect
+        conn, addr = server_socket.accept()
+        print(f"Connection from: {addr}")
+
+        # Server's main loop
         while True:
             # Send different messages
             for message in ["sht", "ask", "spk", "done"]:
                 conn.send(message.encode())
-                print(message)
+                
                 time.sleep(5)  # Wait for 2 seconds before sending the next message
+    
     except KeyboardInterrupt:
-        conn.close()  # Close the connection on interrupt
-
-
-
+        print("Keyboard interrupt received, shutting down.")
+        conn.close()
+        client_process.terminate()  # Terminate the client process
+        client_process.wait()       # Wait for the process to terminate
+        server_socket.close()       # Close the server socket
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
 if __name__ == '__main__':
     start_server()

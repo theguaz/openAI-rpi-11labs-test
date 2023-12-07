@@ -229,8 +229,7 @@ if __name__ == "__main__":
     print("initializing server ")
     start_server()
     time.sleep(1)
-    script_path = '/home/pi/openAI-rpi-11labs-test/test-neopixel.py'  # Replace with your script's path
-    run_script_with_sudo(script_path)
+    
     GPIO.setmode(GPIO.BCM)  # Use Broadcom pin numbering
     GPIO.setup(14, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Button to GPIO17
 

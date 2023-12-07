@@ -2,6 +2,7 @@ import socket
 import time
 import subprocess
 
+client_process = None
 
 def start_server():
     host = 'localhost'  # Server address
@@ -13,7 +14,8 @@ def start_server():
     server_socket.listen(1)
     print("Server listening...")
     script_path = '/home/pi/openAI-rpi-11labs-test/test-neopixel.py' 
-    subprocess.Popen(['sudo', 'python3', script_path])
+    global client_process
+    client_process = subprocess.Popen(['sudo', 'python3', script_path])
 
     try:
         # Wait for the client to connect

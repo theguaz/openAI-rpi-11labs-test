@@ -51,8 +51,8 @@ def light_control(message):
     """ Change the LED light based on the message """
     color_map = {
         'sht': (255, 165, 0),  # Orange
-        'ask': (0, 183, 235),  # Cyan
-        'spk': (152, 255, 152),  # Mint
+        'ask': (0, 133, 235),  # Cyan
+        'spk': (102, 255, 102),  # Mint
         'done': (0, 0, 0)    # Off
     }
     print(message)

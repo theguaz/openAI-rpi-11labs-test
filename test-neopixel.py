@@ -30,7 +30,7 @@ def pulsate():
         for step in range(steps):
             # Calculate brightness using a sine wave pattern for smooth transition
             brightness = (sin(pi * step / steps) ** 2)  # Square of sine for smoother transition
-            adjusted_brightness = int(brightness * 128)
+            adjusted_brightness = int(brightness * 64)
 
             for i in range(strip.numPixels()):
                 # Use global variable current_color
@@ -58,9 +58,9 @@ change_color((0, 255, 0))  # Green
 def light_control(message):
     """ Change the LED light based on the message """
     color_map = {
-        'sht': (255, 0, 0),  # Red
-        'ask': (0, 255, 0),  # Green
-        'spk': (0, 0, 255),  # Blue
+        'sht': (255, 165, 0),  # Orange
+        'ask': (0, 183, 235),  # Cyan
+        'spk': (152, 255, 252),  # Mint
         'done': (0, 0, 0)    # Off
     }
     

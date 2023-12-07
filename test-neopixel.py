@@ -19,17 +19,18 @@ try:
         for i in range(strip.numPixels()):
             strip.setPixelColor(i, Color(255, 0, 0))  # Red color
             strip.show()
-            time.sleep(0.1)
+            time.sleep(0.5)
         for i in range(strip.numPixels()):
             strip.setPixelColor(i, Color(0, 255, 0))  # Green color
             strip.show()
-            time.sleep(0.1)
+            time.sleep(0.5)
         for i in range(strip.numPixels()):
             strip.setPixelColor(i, Color(0, 0, 255))  # Blue color
             strip.show()
-            time.sleep(0.1)
+            time.sleep(0.5)
 except KeyboardInterrupt:
     # Clear the color of all pixels to turn them off
     for i in range(strip.numPixels()):
         strip.setPixelColor(i, Color(0, 0, 0))
+        time.sleep(0.5)
     strip.show()

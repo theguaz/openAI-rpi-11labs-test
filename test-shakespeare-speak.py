@@ -237,7 +237,7 @@ try:
             triggered_function()
             time.sleep(0.2)  # Add a small delay to debounce
 except KeyboardInterrupt:
-    global connection
-    connection.close() 
+    if connection != None
+      connection.close() 
 finally:
     GPIO.cleanup()  # Clean up GPIO on normal exit

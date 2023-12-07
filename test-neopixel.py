@@ -76,6 +76,8 @@ def start_client():
             if len(data) == 3:
                 light_control(data)
             if data == 'shtd':
+                print("closing the chamba?")
+                client_socket.close()
                 break  # Exit the loop to end the program
     except KeyboardInterrupt:
         client_socket.close()

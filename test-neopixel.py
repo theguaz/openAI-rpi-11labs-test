@@ -62,19 +62,19 @@ def light_control(message):
 def start_client():
     host = 'localhost'
     port = 12345
-
+    print("connecting")
     client_socket = socket.socket()
     client_socket.connect((host, port))
     # Start the pulsating effect in a separate thread
     pulsating_thread = Thread(target=pulsate)
     pulsating_thread.start()
-
+    print("connected")
     try:
         while True:
             data = client_socket.recv(1024).decode()
             
-            
-            light_control(data)
+            if len(data) == 3:
+                light_control(data)
     except KeyboardInterrupt:
         client_socket.close()
 

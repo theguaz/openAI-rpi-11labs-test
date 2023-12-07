@@ -236,8 +236,8 @@ try:
         if button_state == False and isProcessing == False:  # Button is pressed
             triggered_function()
             time.sleep(0.2)  # Add a small delay to debounce
-
-finally:
-    GPIO.cleanup()  # Clean up GPIO on normal exit
+except KeyboardInterrupt:
     global connection
     connection.close() 
+finally:
+    GPIO.cleanup()  # Clean up GPIO on normal exit

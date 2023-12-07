@@ -2,6 +2,7 @@ import socket
 from rpi_ws281x import *
 import time
 
+from math import sin, pi
 
 # LED strip configuration
 LED_COUNT = 16      # Number of LED pixels.
@@ -15,21 +16,23 @@ LED_INVERT = False   # True to invert the signal (when using NPN transistor leve
 strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
 strip.begin()
 
-def pulsate(color, total_duration=0.015):
-    """ Gradually change the LED brightness to create a pulsating effect over a total duration """
-    steps = 128  # Number of brightness levels
-    num_cycles = 2  # Brighten and dim count as 2 cycles
-    interval = total_duration / (steps * num_cycles)
+def pulsate(color, total_duration=0.5):
+    """ Gradually change the LED brightness in a yo-yo motion over a total duration """
+    steps = 100  # Higher number of steps for smoother transition
+    interval = total_duration / steps  # Interval for each step
 
-    for brightness in list(range(0, 256, int(256/steps))) + list(range(255, -1, -int(256/steps))):
+    for step in range(steps):
+        # Calculate brightness using a sine wave pattern for smooth transition
+        brightness = (sin(pi * step / steps) ** 2)  # Square of sine for smoother transition
+        adjusted_brightness = int(brightness * 255)
+
         for i in range(strip.numPixels()):
-            adjusted_color = Color(int(color[0] * brightness/255),
-                                   int(color[1] * brightness/255),
-                                   int(color[2] * brightness/255))
+            adjusted_color = Color(int(color[0] * adjusted_brightness/255),
+                                   int(color[1] * adjusted_brightness/255),
+                                   int(color[2] * adjusted_brightness/255))
             strip.setPixelColor(i, adjusted_color)
         strip.show()
         time.sleep(interval)
-
 
 def light_control(message):
     """ Change the LED light based on the message """

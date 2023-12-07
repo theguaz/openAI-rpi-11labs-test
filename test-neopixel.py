@@ -15,7 +15,7 @@ strip.begin()
 
 def pulsate(color, steps=10, interval=0.1):
     """ Gradually change the LED brightness to create a pulsating effect """
-    for brightness in range(0, 256, steps) + range(255, -1, -steps):
+    for brightness in list(range(0, 256, steps)) + list(range(255, -1, -steps)):
         for i in range(strip.numPixels()):
             adjusted_color = Color(int(color[0] * brightness/255),
                                    int(color[1] * brightness/255),

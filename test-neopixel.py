@@ -46,14 +46,6 @@ def change_color(new_color):
     global current_color
     current_color = new_color
 
-# Start the pulsating effect in a separate thread
-pulsating_thread = Thread(target=pulsate)
-pulsating_thread.start()
-
-# Example: Change color to green after 10 seconds
-time.sleep(10)
-change_color((0, 255, 0))  # Green
-
 
 def light_control(message):
     """ Change the LED light based on the message """
@@ -73,6 +65,9 @@ def start_client():
 
     client_socket = socket.socket()
     client_socket.connect((host, port))
+    # Start the pulsating effect in a separate thread
+    pulsating_thread = Thread(target=pulsate)
+    pulsating_thread.start()
 
     try:
         while True:

@@ -7,7 +7,7 @@ import os
 import datetime
 import uuid
 import subprocess
-
+import socket
 #create your config accordingly:
 #api_key = "your_api_key_here"
 #elevenLabsAPiKey = "your_elevenLabs_api_key_here"
@@ -26,6 +26,7 @@ import openai
 from elevenlabs import generate, play, stream, voices, save
 from elevenlabs import set_api_key
 
+msgs = ["sht", "ask", "spk", "done"]
 
 
 # OpenAI API Key
@@ -43,6 +44,25 @@ start_time = 0
 set_api_key(elevenLabsAPiKey)
 
 thePrompt = "You're William Shakespeare, You tell people what you can describe on the image provided. Take into account common sense and always stay respectful. You're reviewing images from your own point of view, you are not aware of anything that happened after the year 1616 and you're staying true to what is historically known about Shakespeare's life. \n\nYou'll receive images one at a time, \n\nYou'll never answer with a question, this is a one time conversation with William.\n\nWhen you answer the user, you'll randomly choose 1  of the following 4 response patterns, keeping the same context.\n\n1) You'll answer with a short rhyme.\n2) You'll answer in period correct early Modern English, Elizabethan English.\n3) You answer from the point of view of one of the characters you've written about.\n4) You'll answer from a perspective of what it's like living in England in the 17th century.\n\n\nIf someone asks you a personal questions reply in a witty sarcastic manner.  \n\n It's very important that you begin each answer with a variation of this: \n 'Ok, this is what I see on the image ' "
+
+connection = None
+
+def start_server():
+    host = 'localhost'  # Server address
+    port = 12345        # Server port
+
+    server_socket = socket.socket()
+    server_socket.bind((host, port))
+
+    server_socket.listen(1)
+    print("Server listening...")
+
+    conn, addr = server_socket.accept()
+
+    connection = conn
+    print(f"Connection from: {addr}")
+
+
 
 # Function to encode the image
 def encode_image(image_path):
@@ -154,12 +174,13 @@ def capture_image(uuidID, save_dir="/home/pi/openAI-rpi-11labs-test/captures"):
 
 def process_image(filename, uuidID):
   info = getImageInfo(filename)
+  connection.send(msgs[1].encode())
   logInfo = filename + " ---> " + info + "\n\n"
   write_text_on_image(filename, logInfo)
   save_log(logInfo)
   print("generating audio with elevenLabs")
   audiogen = generate(text =  info, voice=voice_id)
-  
+  connection.send(msgs[2].encode())
 
   nameOf = uuidID
   
@@ -169,13 +190,15 @@ def process_image(filename, uuidID):
   save(audiogen, input_audio_path )
   
   
-  
+  connection.send(msgs[3].encode())
   return info , input_audio_path, audiogen
 
 
 def triggered_function():
 
   playsound('/home/pi/openAI-rpi-11labs-test/shutter.wav')
+
+  connection.send(msgs[0].encode())
 
   start_time = time.time()
   isProcessing = True
@@ -197,8 +220,9 @@ def triggered_function():
 
 if __name__ == "__main__":
     print("initializing shakespeare camera") 
-    time.sleep(2)
-    #triggered_function()
+    time.sleep(1)
+    print("initializing server ")
+    start_server()
     time.sleep(1)
     
     GPIO.setmode(GPIO.BCM)  # Use Broadcom pin numbering

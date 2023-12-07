@@ -13,26 +13,28 @@ LED_INVERT = False   # True to invert the signal (when using NPN transistor leve
 strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
 strip.begin()
 
+def pulsate(color, steps=10, interval=0.1):
+    """ Gradually change the LED brightness to create a pulsating effect """
+    for brightness in range(0, 256, steps) + range(255, -1, -steps):
+        for i in range(strip.numPixels()):
+            adjusted_color = Color(int(color[0] * brightness/255),
+                                   int(color[1] * brightness/255),
+                                   int(color[2] * brightness/255))
+            strip.setPixelColor(i, adjusted_color)
+        strip.show()
+        time.sleep(interval)
+
 def light_control(message):
     """ Change the LED light based on the message """
-    if message == 'sht':
-        # Example: Turn on the LED in red
-        color = Color(255, 0, 0)  # Red
-    elif message == 'ask':
-        # Example: Turn on the LED in green
-        color = Color(0, 255, 0)  # Green
-    elif message == 'spk':
-        # Example: Turn on the LED in blue
-        color = Color(0, 0, 255)  # Blue
-    elif message == 'done':
-        # Example: Turn off the LED
-        color = Color(0, 0, 0)  # Off
-    else:
-        return
-
-    for i in range(strip.numPixels()):
-        strip.setPixelColor(i, color)
-        strip.show()
+    color_map = {
+        'sht': (255, 0, 0),  # Red
+        'ask': (0, 255, 0),  # Green
+        'spk': (0, 0, 255),  # Blue
+        'done': (0, 0, 0)    # Off
+    }
+    
+    color = color_map.get(message, (0, 0, 0))
+    pulsate(color)
 
 def start_client():
     host = 'localhost'

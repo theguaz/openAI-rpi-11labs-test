@@ -174,9 +174,9 @@ def capture_image(uuidID, save_dir="/home/pi/openAI-rpi-11labs-test/captures"):
 
 def process_image(filename, uuidID):
   info = getImageInfo(filename)
-  global connection
+  
 
-  connection.send(msgs[1].encode())
+  
 
   logInfo = filename + " ---> " + info + "\n\n"
   write_text_on_image(filename, logInfo)
@@ -201,7 +201,7 @@ def triggered_function():
 
   playsound('/home/pi/openAI-rpi-11labs-test/shutter.wav')
   global connection
-  
+  connection.send(msgs[0].encode())
 
   start_time = time.time()
   isProcessing = True
@@ -210,6 +210,7 @@ def triggered_function():
   
   captured_image_path = capture_image(uuidID)
   process = process_image(captured_image_path, uuidID)
+  connection.send(msgs[1].encode())
   #create_video_from_image_and_audio(captured_image_path, process[1], 'videos/' + uuidID + ".mp4" )
   
   end_time = time.time()

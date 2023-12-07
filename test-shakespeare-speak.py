@@ -177,12 +177,14 @@ def process_image(filename, uuidID):
   global connection
 
   connection.send(msgs[1].encode())
+
   logInfo = filename + " ---> " + info + "\n\n"
   write_text_on_image(filename, logInfo)
   save_log(logInfo)
   print("generating audio with elevenLabs")
   audiogen = generate(text =  info, voice=voice_id)
-  connection.send(msgs[2].encode())
+
+  
 
   nameOf = uuidID
   
@@ -192,7 +194,6 @@ def process_image(filename, uuidID):
   save(audiogen, input_audio_path )
   
   
-  connection.send(msgs[3].encode())
   return info , input_audio_path, audiogen
 
 
@@ -200,7 +201,7 @@ def triggered_function():
 
   playsound('/home/pi/openAI-rpi-11labs-test/shutter.wav')
   global connection
-  connection.send(msgs[0].encode())
+  
 
   start_time = time.time()
   isProcessing = True
@@ -214,8 +215,9 @@ def triggered_function():
   end_time = time.time()
   elapsed_time = end_time - start_time
   print("task completed for UUID--> " + uuidID + " in exactly " + str(elapsed_time) + " secs")
-
+  connection.send(msgs[2].encode())
   play(process[2])
+  connection.send(msgs[3].encode())
   isProcessing = False
 
 

@@ -52,7 +52,7 @@ def light_control(message):
     color_map = {
         'sht': (255, 165, 0),  # Orange
         'ask': (0, 183, 235),  # Cyan
-        'spk': (152, 255, 252),  # Mint
+        'spk': (152, 255, 152),  # Mint
         'done': (0, 0, 0)    # Off
     }
     print(message)

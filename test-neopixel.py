@@ -45,7 +45,7 @@ def start_client():
         while True:
             data = client_socket.recv(1024).decode()
             
-            print("Received from server: " + data)
+            
             light_control(data)
     except KeyboardInterrupt:
         client_socket.close()

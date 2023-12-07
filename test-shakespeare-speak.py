@@ -58,7 +58,7 @@ def start_server():
     print("Server listening...")
 
     conn, addr = server_socket.accept()
-
+    global connection
     connection = conn
     print(f"Connection from: {addr}")
 
@@ -174,6 +174,8 @@ def capture_image(uuidID, save_dir="/home/pi/openAI-rpi-11labs-test/captures"):
 
 def process_image(filename, uuidID):
   info = getImageInfo(filename)
+  global connection
+  
   connection.send(msgs[1].encode())
   logInfo = filename + " ---> " + info + "\n\n"
   write_text_on_image(filename, logInfo)
@@ -197,7 +199,7 @@ def process_image(filename, uuidID):
 def triggered_function():
 
   playsound('/home/pi/openAI-rpi-11labs-test/shutter.wav')
-
+  global connection
   connection.send(msgs[0].encode())
 
   start_time = time.time()

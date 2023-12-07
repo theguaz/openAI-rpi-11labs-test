@@ -32,10 +32,11 @@ def start_server():
     
     except KeyboardInterrupt:
         print("Keyboard interrupt received, shutting down.")
-        conn.send('shtd'.encode())
-        conn.close()
-        # Wait for the process to terminate
-        server_socket.close()       # Close the server socket
+        try:
+            conn.send('shtd'.encode())  # Send shutdown command to client
+        finally:
+            conn.close()
+            server_socket.close()
     except Exception as e:
         print(f"An error occurred: {e}")
 

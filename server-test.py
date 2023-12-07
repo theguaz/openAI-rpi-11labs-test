@@ -23,8 +23,7 @@ def start_server():
     server_socket.listen(1)
     print("Server listening...")
 
-    script_path = '/home/pi/openAI-rpi-11labs-test/test-neopixel.py'  # Replace with your script's path
-    run_script_with_sudo(script_path)
+    
 
     conn, addr = server_socket.accept()
     print(f"Connection from: {addr}")
@@ -44,4 +43,6 @@ def start_server():
 
 if __name__ == '__main__':
     start_server()
+    script_path = '/home/pi/openAI-rpi-11labs-test/test-neopixel.py'  # Replace with your script's path
+    run_script_with_sudo(script_path)
 

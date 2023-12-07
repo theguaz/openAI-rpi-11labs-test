@@ -39,6 +39,7 @@ def start_server():
             time.sleep(1)
             conn.close()
             server_socket.close()
+            print("did u do this??")
     except Exception as e:
         print(f"An error occurred: {e}")
 

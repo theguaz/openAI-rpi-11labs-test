@@ -15,9 +15,13 @@ LED_INVERT = False   # True to invert the signal (when using NPN transistor leve
 strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
 strip.begin()
 
-def pulsate(color, steps=10, interval=0.1):
-    """ Gradually change the LED brightness to create a pulsating effect """
-    for brightness in list(range(0, 256, steps)) + list(range(255, -1, -steps)):
+def pulsate(color, total_duration=0.5):
+    """ Gradually change the LED brightness to create a pulsating effect over a total duration """
+    steps = 10  # Number of brightness levels
+    num_cycles = 2  # Brighten and dim count as 2 cycles
+    interval = total_duration / (steps * num_cycles)
+
+    for brightness in list(range(0, 256, int(256/steps))) + list(range(255, -1, -int(256/steps))):
         for i in range(strip.numPixels()):
             adjusted_color = Color(int(color[0] * brightness/255),
                                    int(color[1] * brightness/255),
@@ -25,6 +29,7 @@ def pulsate(color, steps=10, interval=0.1):
             strip.setPixelColor(i, adjusted_color)
         strip.show()
         time.sleep(interval)
+
 
 def light_control(message):
     """ Change the LED light based on the message """

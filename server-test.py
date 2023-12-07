@@ -35,6 +35,7 @@ def start_server():
         try:
             conn.send('shtd'.encode())  # Send shutdown command to client
         finally:
+            time.sleep(1)
             conn.close()
             server_socket.close()
     except Exception as e:

@@ -23,14 +23,14 @@ current_color = (255, 0, 0)  # Starting color, e.g., red
 def pulsate():
     """ Gradually change the LED brightness in a yo-yo motion continuously """
     steps = 100  # Higher number of steps for smoother transition
-    pulse_duration = 0.5  # Duration of one pulse
+    pulse_duration = 0.25  # Duration of one pulse
     interval = pulse_duration / steps  # Interval for each step
 
     while True:  # Continuous loop
         for step in range(steps):
             # Calculate brightness using a sine wave pattern for smooth transition
             brightness = (sin(pi * step / steps) ** 2)  # Square of sine for smoother transition
-            adjusted_brightness = int(brightness * 255)
+            adjusted_brightness = int(brightness * 128)
 
             for i in range(strip.numPixels()):
                 # Use global variable current_color

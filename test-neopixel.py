@@ -1,8 +1,9 @@
 import socket
 from rpi_ws281x import *
 import time
-
 from math import sin, pi
+from threading import Thread
+
 
 # LED strip configuration
 LED_COUNT = 16      # Number of LED pixels.
@@ -16,23 +17,43 @@ LED_INVERT = False   # True to invert the signal (when using NPN transistor leve
 strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
 strip.begin()
 
-def pulsate(color, total_duration=0.5):
-    """ Gradually change the LED brightness in a yo-yo motion over a total duration """
+
+current_color = (255, 0, 0)  # Starting color, e.g., red
+
+def pulsate():
+    """ Gradually change the LED brightness in a yo-yo motion continuously """
     steps = 100  # Higher number of steps for smoother transition
-    interval = total_duration / steps  # Interval for each step
+    pulse_duration = 0.5  # Duration of one pulse
+    interval = pulse_duration / steps  # Interval for each step
 
-    for step in range(steps):
-        # Calculate brightness using a sine wave pattern for smooth transition
-        brightness = (sin(pi * step / steps) ** 2)  # Square of sine for smoother transition
-        adjusted_brightness = int(brightness * 255)
+    while True:  # Continuous loop
+        for step in range(steps):
+            # Calculate brightness using a sine wave pattern for smooth transition
+            brightness = (sin(pi * step / steps) ** 2)  # Square of sine for smoother transition
+            adjusted_brightness = int(brightness * 255)
 
-        for i in range(strip.numPixels()):
-            adjusted_color = Color(int(color[0] * adjusted_brightness/255),
-                                   int(color[1] * adjusted_brightness/255),
-                                   int(color[2] * adjusted_brightness/255))
-            strip.setPixelColor(i, adjusted_color)
-        strip.show()
-        time.sleep(interval)
+            for i in range(strip.numPixels()):
+                # Use global variable current_color
+                adjusted_color = Color(int(current_color[0] * adjusted_brightness / 255),
+                                       int(current_color[1] * adjusted_brightness / 255),
+                                       int(current_color[2] * adjusted_brightness / 255))
+                strip.setPixelColor(i, adjusted_color)
+            strip.show()
+            time.sleep(interval)
+
+def change_color(new_color):
+    """ Change the color for the pulsating effect """
+    global current_color
+    current_color = new_color
+
+# Start the pulsating effect in a separate thread
+pulsating_thread = Thread(target=pulsate)
+pulsating_thread.start()
+
+# Example: Change color to green after 10 seconds
+time.sleep(10)
+change_color((0, 255, 0))  # Green
+
 
 def light_control(message):
     """ Change the LED light based on the message """
@@ -44,7 +65,7 @@ def light_control(message):
     }
     
     color = color_map.get(message, (0, 0, 0))
-    pulsate(color)
+    change_color(color)
 
 def start_client():
     host = 'localhost'

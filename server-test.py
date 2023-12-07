@@ -34,6 +34,7 @@ def start_server():
             # Send different messages
             for message in ["sht", "ask", "spk", "done"]:
                 conn.send(message.encode())
+                print(message)
                 time.sleep(5)  # Wait for 2 seconds before sending the next message
     except KeyboardInterrupt:
         conn.close()  # Close the connection on interrupt

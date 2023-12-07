@@ -2,16 +2,6 @@ import socket
 import time
 import subprocess
 
-def run_script_with_sudo(script_path):
-    try:
-        # Command to run the script with sudo
-        command = ['sudo', 'python3', script_path]
-        
-        # Execute the command
-        subprocess.run(command)
-    except subprocess.SubprocessError as e:
-        print(f"An error occurred: {e}")
-
 
 def start_server():
     host = 'localhost'  # Server address
@@ -22,8 +12,8 @@ def start_server():
 
     server_socket.listen(1)
     print("Server listening...")
-
-    
+    script_path = '/home/pi/openAI-rpi-11labs-test/test-neopixel.py' 
+    subprocess.Popen(['sudo', 'python3', script_path])
 
     conn, addr = server_socket.accept()
     print(f"Connection from: {addr}")
@@ -43,5 +33,5 @@ def start_server():
 
 if __name__ == '__main__':
     start_server()
- 
+
 

@@ -18,7 +18,7 @@ strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, 
 strip.begin()
 
 
-current_color = (255, 0, 0)  # Starting color, e.g., red
+current_color = (0, 0, 0)  # Starting color, e.g., red
 
 def pulsate():
     """ Gradually change the LED brightness in a yo-yo motion continuously """
@@ -55,7 +55,7 @@ def light_control(message):
         'spk': (152, 255, 252),  # Mint
         'done': (0, 0, 0)    # Off
     }
-    
+    print(message)
     color = color_map.get(message, (0, 0, 0))
     change_color(color)
 

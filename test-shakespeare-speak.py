@@ -209,7 +209,8 @@ def triggered_function():
 
 if __name__ == "__main__":
     print("initializing shakespeare camera") 
-    time.sleep(1)
+    time.sleep(2)
+    #triggered_function()
     time.sleep(1)
     
     GPIO.setmode(GPIO.BCM)  # Use Broadcom pin numbering
@@ -221,6 +222,6 @@ try:
         if button_state == False and isProcessing == False:  # Button is pressed
             triggered_function()
             time.sleep(0.2)  # Add a small delay to debounce
-except KeyboardInterrupt:
-  try:
-    print("wtfffffff")
+
+finally:
+    GPIO.cleanup()  # Clean up GPIO on normal exit

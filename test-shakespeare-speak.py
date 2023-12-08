@@ -222,8 +222,6 @@ try:
             triggered_function()
             time.sleep(0.2)  # Add a small delay to debounce
 except KeyboardInterrupt:
-    if connection != None:
-      try:
-        print("wtfffffff")
-    finally:
-        GPIO.cleanup()  # Clean up GPIO on normal exit
+  try:
+    print("wtfffffff")
+

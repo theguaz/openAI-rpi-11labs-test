@@ -225,5 +225,5 @@ except KeyboardInterrupt:
     if connection != None:
       try:
         print("wtfffffff")
-finally:
-    GPIO.cleanup()  # Clean up GPIO on normal exit
+    finally:
+        GPIO.cleanup()  # Clean up GPIO on normal exit

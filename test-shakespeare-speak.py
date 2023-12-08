@@ -28,6 +28,8 @@ from elevenlabs import set_api_key
 
 msgs = ["sht", "ask", "spk", "done"]
 
+client_process = None
+
 
 # OpenAI API Key
 
@@ -56,6 +58,10 @@ def start_server():
 
     server_socket.listen(1)
     print("Server listening...")
+    
+    script_path = '/home/pi/openAI-rpi-11labs-test/test-neopixel.py' 
+    global client_process
+    client_process = subprocess.Popen(['sudo', 'python3', script_path])
 
     conn, addr = server_socket.accept()
     global connection
@@ -241,6 +247,14 @@ try:
             time.sleep(0.2)  # Add a small delay to debounce
 except KeyboardInterrupt:
     if connection != None:
+      try:
+            print("wtfffffff")
+            connection.send('shtd'.encode())  # Send shutdown command to client
+        finally:
+            time.sleep(1)
+            connection.close()
+            server_socket.close()
+            print("did u do this??")
       connection.close() 
 finally:
     GPIO.cleanup()  # Clean up GPIO on normal exit

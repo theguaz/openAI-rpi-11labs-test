@@ -248,13 +248,12 @@ try:
 except KeyboardInterrupt:
     if connection != None:
       try:
-            print("wtfffffff")
-            connection.send('shtd'.encode())  # Send shutdown command to client
-        finally:
-            time.sleep(1)
-            connection.close()
-            server_socket.close()
-            print("did u do this??")
-      connection.close() 
+        print("wtfffffff")
+        connection.send('shtd'.encode())  # Send shutdown command to client
+      finally:
+        time.sleep(1)
+        connection.close()
+        server_socket.close()
+        print("did u do this??")
 finally:
     GPIO.cleanup()  # Clean up GPIO on normal exit

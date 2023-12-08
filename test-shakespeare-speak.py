@@ -7,7 +7,7 @@ import os
 import datetime
 import uuid
 import subprocess
-import socket
+
 #create your config accordingly:
 #api_key = "your_api_key_here"
 #elevenLabsAPiKey = "your_elevenLabs_api_key_here"
@@ -46,27 +46,6 @@ start_time = 0
 set_api_key(elevenLabsAPiKey)
 
 thePrompt = "You're William Shakespeare, You tell people what you can describe on the image provided. Take into account common sense and always stay respectful. You're reviewing images from your own point of view, you are not aware of anything that happened after the year 1616 and you're staying true to what is historically known about Shakespeare's life. \n\nYou'll receive images one at a time, \n\nYou'll never answer with a question, this is a one time conversation with William.\n\nWhen you answer the user, you'll randomly choose 1  of the following 4 response patterns, keeping the same context.\n\n1) You'll answer with a short rhyme.\n2) You'll answer in period correct early Modern English, Elizabethan English.\n3) You answer from the point of view of one of the characters you've written about.\n4) You'll answer from a perspective of what it's like living in England in the 17th century.\n\n\nIf someone asks you a personal questions reply in a witty sarcastic manner.  \n\n It's very important that you begin each answer with a variation of this: \n 'Ok, this is what I see on the image ' "
-
-connection = None
-
-def start_server():
-    host = 'localhost'  # Server address
-    port = 12345        # Server port
-
-    server_socket = socket.socket()
-    server_socket.bind((host, port))
-
-    server_socket.listen(1)
-    print("Server listening...")
-    
-    script_path = '/home/pi/openAI-rpi-11labs-test/test-neopixel.py' 
-    global client_process
-    client_process = subprocess.Popen(['sudo', 'python3', script_path])
-
-    conn, addr = server_socket.accept()
-    global connection
-    connection = conn
-    print(f"Connection from: {addr}")
 
 
 
@@ -206,8 +185,7 @@ def process_image(filename, uuidID):
 def triggered_function():
 
   playsound('/home/pi/openAI-rpi-11labs-test/shutter.wav')
-  global connection
-  connection.send(msgs[0].encode())
+  
 
   start_time = time.time()
   isProcessing = True
@@ -216,15 +194,15 @@ def triggered_function():
   
   captured_image_path = capture_image(uuidID)
   process = process_image(captured_image_path, uuidID)
-  connection.send(msgs[1].encode())
+  
   #create_video_from_image_and_audio(captured_image_path, process[1], 'videos/' + uuidID + ".mp4" )
   
   end_time = time.time()
   elapsed_time = end_time - start_time
   print("task completed for UUID--> " + uuidID + " in exactly " + str(elapsed_time) + " secs")
-  connection.send(msgs[2].encode())
+  
   play(process[2])
-  connection.send(msgs[3].encode())
+  
   isProcessing = False
 
 
@@ -232,8 +210,6 @@ def triggered_function():
 if __name__ == "__main__":
     print("initializing shakespeare camera") 
     time.sleep(1)
-    print("initializing server ")
-    start_server()
     time.sleep(1)
     
     GPIO.setmode(GPIO.BCM)  # Use Broadcom pin numbering
@@ -249,11 +225,5 @@ except KeyboardInterrupt:
     if connection != None:
       try:
         print("wtfffffff")
-        connection.send('shtd'.encode())  # Send shutdown command to client
-      finally:
-        time.sleep(1)
-        connection.close()
-        server_socket.close()
-        print("did u do this??")
 finally:
     GPIO.cleanup()  # Clean up GPIO on normal exit

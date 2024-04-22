@@ -200,7 +200,7 @@ def simpleMSG(thePrompt):
             ]
           }
         ],
-        "max_tokens": 16
+        "max_tokens": 32
       }
     openAI_response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
     msg = openAI_response.json()
@@ -233,7 +233,7 @@ def triggered_function():
 
 if __name__ == "__main__":
     print("initializing shakespeare camera")
-    justTalk( simpleMSG("Write me a 5 words very short message in cockney english that informs that we are connected to the internet") )
+    justTalk( simpleMSG("Write me a 10 words very short message in cockney english that informs that we are connected to the internet and ready to start shooting photographs") )
 
     GPIO.setmode(GPIO.BCM)  # Use Broadcom pin numbering
     GPIO.setup(14, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Button to GPIO17

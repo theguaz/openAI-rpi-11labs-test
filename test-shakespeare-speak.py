@@ -183,7 +183,7 @@ def justTalk(str):
 
 
 def check_openai_api():
-    url = "https://api.openai.com/v1/engines/davinci-codex/completions"
+    url = "https://api.openai.com/v1/chat/completions"
     headers = {
         "Authorization": f"Bearer {api_key}"
     }

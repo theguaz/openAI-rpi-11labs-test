@@ -202,9 +202,9 @@ def simpleMSG(thePrompt):
         ],
         "max_tokens": 64
       }
-      openAI_response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
-      msg = openAI_response.json()
-      return msg['choices'][0]['message']['content']
+    openAI_response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
+    msg = openAI_response.json()
+    return msg['choices'][0]['message']['content']
 
 def triggered_function():
 

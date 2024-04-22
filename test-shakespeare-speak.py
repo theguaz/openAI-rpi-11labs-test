@@ -151,7 +151,7 @@ def capture_image(uuidID, save_dir="/home/pi/openAI-rpi-11labs-test/captures"):
         camera.start_preview()
         # Camera warm-up time
         print("warming camera")
-        time.sleep(1)
+        time.sleep(.25)
         camera.capture(file_path)
         print(f"Image captured and saved as {file_path}")
 
@@ -160,16 +160,11 @@ def capture_image(uuidID, save_dir="/home/pi/openAI-rpi-11labs-test/captures"):
 def process_image(filename, uuidID):
   info = getImageInfo(filename)
   
-
-  
-
   logInfo = filename + " ---> " + info + "\n\n"
   write_text_on_image(filename, logInfo)
   save_log(logInfo)
   print("generating audio with elevenLabs")
-  audiogen = generate(text =  info, voice=voice_id)
-
-  
+  audiogen = generate(text =  info, voice=voice_id, output_format= "mp3_44100_64", )
 
   nameOf = uuidID
   
@@ -177,7 +172,6 @@ def process_image(filename, uuidID):
   print("playing msg \n\n")
   print("saving msg \n\n")
   save(audiogen, input_audio_path )
-  
   
   return info , input_audio_path, audiogen
 
@@ -209,19 +203,12 @@ def triggered_function():
 
 if __name__ == "__main__":
     print("initializing shakespeare camera") 
-    time.sleep(2)
-    #triggered_function()
-    time.sleep(1)
-    
     GPIO.setmode(GPIO.BCM)  # Use Broadcom pin numbering
     GPIO.setup(14, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Button to GPIO17
 
 try:
     while True:
-        button_state = GPIO.input(14)
-        if button_state == False and isProcessing == False:  # Button is pressed
-            triggered_function()
-            time.sleep(0.2)  # Add a small delay to debounce
-
-finally:
-    GPIO.cleanup()  # Clean up GPIO on normal exit
+      button_state = GPIO.input(14)
+      if button_state == False and isProcessing == False:  # Button is pressed
+        triggered_function()
+        time.sleep(0.05)  # Add a small delay to debounce

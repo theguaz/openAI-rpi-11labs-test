@@ -179,7 +179,7 @@ def process_image(filename, uuidID):
 def justTalk(str):
   audiogen = generate(text =  str, voice=voice_id)
   print(f"playing {str} \n\n")
-  return str , "", audiogen
+  play(audiogen)
 
 
 def simpleMSG(thePrompt):
@@ -200,7 +200,7 @@ def simpleMSG(thePrompt):
             ]
           }
         ],
-        "max_tokens": 64
+        "max_tokens": 16
       }
     openAI_response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
     msg = openAI_response.json()
@@ -233,7 +233,7 @@ def triggered_function():
 
 if __name__ == "__main__":
     print("initializing shakespeare camera")
-    justTalk( simpleMSG("Write me a message in cockney english that informs that we are connected to the internet") )
+    justTalk( simpleMSG("Write me a 5 words very short message in cockney english that informs that we are connected to the internet") )
 
     GPIO.setmode(GPIO.BCM)  # Use Broadcom pin numbering
     GPIO.setup(14, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Button to GPIO17

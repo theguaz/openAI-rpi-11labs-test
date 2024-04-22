@@ -176,6 +176,31 @@ def process_image(filename, uuidID):
   return info , input_audio_path, audiogen
 
 
+def justTalk(str):
+  audiogen = generate(text =  str, voice=voice_id)
+  print("playing talk \n\n")
+  return str , "", audiogen
+
+
+def check_openai_api():
+    url = "https://api.openai.com/v1/engines/davinci-codex/completions"
+    headers = {
+        "Authorization": f"Bearer {api_key}"
+    }
+    data = {
+        "prompt": "Write me a message in old english that informs that we are connected to the internet",
+        "max_tokens": 5
+    }
+
+    try:
+        response = requests.post(url, headers=headers, json=data)
+        if response.status_code == 200:
+            return response
+        else:
+            return f"La API de OpenAI respondió con un estado: {response.status_code}"
+    except requests.exceptions.RequestException as e:
+        return f"Error al conectar con la API de OpenAI: {e}"
+
 def triggered_function():
 
   playsound('/home/pi/openAI-rpi-11labs-test/shutter.wav')
@@ -202,10 +227,13 @@ def triggered_function():
 
 
 if __name__ == "__main__":
-    print("initializing shakespeare camera") 
+    print("initializing shakespeare camera")
+    msg = check_openai_api()
+    
+    justTalk(msg)
+
     GPIO.setmode(GPIO.BCM)  # Use Broadcom pin numbering
     GPIO.setup(14, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Button to GPIO17
-
 try:
     while True:
       button_state = GPIO.input(14)

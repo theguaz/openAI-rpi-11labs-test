@@ -212,3 +212,5 @@ try:
       if button_state == False and isProcessing == False:  # Button is pressed
         triggered_function()
         time.sleep(0.05)  # Add a small delay to debounce
+
+#end

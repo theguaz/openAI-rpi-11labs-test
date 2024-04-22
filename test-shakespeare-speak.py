@@ -212,5 +212,10 @@ try:
       if button_state == False and isProcessing == False:  # Button is pressed
         triggered_function()
         time.sleep(0.05)  # Add a small delay to debounce
-
+except KeyboardInterrupt:
+  print("Program stopped by User")
+except Exception as e:
+  print("An error occurred:", e)
+finally:
+  GPIO.cleanup()  # This ensures a clean exit
 #end

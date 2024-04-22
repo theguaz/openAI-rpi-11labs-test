@@ -178,7 +178,7 @@ def process_image(filename, uuidID):
 
 def justTalk(str):
   audiogen = generate(text =  str, voice=voice_id)
-  print("playing talk \n\n")
+  print(f"playing {str} \n\n")
   return str , "", audiogen
 
 
@@ -229,7 +229,7 @@ def triggered_function():
 if __name__ == "__main__":
     print("initializing shakespeare camera")
     msg = check_openai_api()
-    
+
     justTalk(msg)
 
     GPIO.setmode(GPIO.BCM)  # Use Broadcom pin numbering

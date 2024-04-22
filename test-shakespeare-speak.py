@@ -164,7 +164,7 @@ def process_image(filename, uuidID):
   write_text_on_image(filename, logInfo)
   save_log(logInfo)
   print("generating audio with elevenLabs")
-  audiogen = generate(text =  info, voice=voice_id, output_format= "mp3_44100_64", )
+  audiogen = generate(text =  info, voice=voice_id)
 
   nameOf = uuidID
   

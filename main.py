@@ -8,6 +8,7 @@ import datetime
 import uuid
 import subprocess
 
+import json
 import random
 
 #create your config accordingly:
@@ -37,46 +38,56 @@ client_process = None
 
 api_key = config.api_key
 elevenLabsAPiKey = config.elevenLabsAPiKey
-voice_id = config.voice_id
+
 
 isProcessing = False
 
 
 start_time = 0
 
-
+promptsFile = 'prompts.json'
 projectFolder = '/home/pi/openAI-rpi-11labs-test/'
 
 set_api_key(elevenLabsAPiKey)
 
-thePrompt = "You're a character from a Guy Ritchie movie, you describe by creating a rhyme in shakespearerian style what you see on the image taken by the device it contains you. Take into account common sense and always stay respectful. You're reviewing images from your own point of view, answer as you were browsing social media. \n\nYou'll receive images one at a time, \n\nYou'll never answer with a question, this is a one time conversation with you\n\n It's very important that you begin each answer with a variation of this: \n 'Ok, this is what I see on the image ' "
+#thePrompt = "You're a character from a Guy Ritchie movie, you describe by creating a rhyme in shakespearerian style what you see on the image taken by the device it contains you. Take into account common sense and always stay respectful. You're reviewing images from your own point of view, answer as you were browsing social media. \n\nYou'll receive images one at a time, \n\nYou'll never answer with a question, this is a one time conversation with you\n\n It's very important that you begin each answer with a variation of this: \n 'Ok, this is what I see on the image ' "
 
 
-def select_random_phrase():
+def load_and_select_random_prompt(filename):
+    # Load the JSON data from a file
+    with open(filename, 'r') as file:
+        data = json.load(file)
+    # Randomly select one of the prompts
+    random_prompt = random.choice(data['prompts'])
+    
+    return random_prompt
+
+def select_random_phrase(character):
     analysisPhrases = [
-        "Analyzing image details...",
+        "Analyzing image details",
         "Decoding visual data...",
-        "Interpreting the pixels...",
-        "Rendering insights...",
-        "Examining the snapshot...",
-        "Unpacking image content...",
-        "Image analysis underway...",
-        "Breaking down the picture...",
-        "Reading visual information...",
+        "Interpreting the pixels",
+        "Rendering insights",
+        "Examining the snapshot",
+        "Unpacking image content",
+        "Image analysis underway",
+        "Breaking down the picture",
+        "Reading visual information",
         "Fetching image details...",
-        "Extracting data from image...",
-        "Converting image to insights...",
-        "Processing visual input...",
-        "Scanning image content...",
-        "Evaluating pictorial elements...",
-        "Assessing image composition...",
-        "Compiling image analysis...",
-        "Deriving insights from image...",
-        "Crunching image data...",
-        "Dissecting the frame..."
+        "Extracting data from image",
+        "Converting image to insights",
+        "Processing visual input",
+        "Scanning image content",
+        "Evaluating pictorial elements",
+        "Assessing image composition",
+        "Compiling image analysis",
+        "Deriving insights from image",
+        "Crunching image data",
+        "Dissecting the frame"
     ]
+    whoIM = random.choice(analysisPhrases) + " as " + character + " ..."
     # Select a random phrase from the list
-    return random.choice(analysisPhrases)
+    return whoIM
 
 # Function to encode the image
 def encode_image(image_path):
@@ -108,7 +119,7 @@ def write_text_on_image(image_path, text, position=(10, 10), font_size=5, font_c
     except IOError as e:
         print(f"Error opening or processing the image: {e}")
 
-def getImageInfo(image_path):
+def getImageInfo(image_path, thePrompt):
     base64_image = encode_image(image_path)
     print("asking open ai for --->", {image_path})
     headers = {
@@ -186,14 +197,14 @@ def capture_image(uuidID, save_dir="/home/pi/openAI-rpi-11labs-test/captures"):
 
     return file_path
 
-def process_image(filename, uuidID):
-  info = getImageInfo(filename)
+def process_image(filename, uuidID, prompt, voiceID):
+  info = getImageInfo(filename, prompt)
   
   logInfo = filename + " ---> " + info + "\n\n"
   write_text_on_image(filename, logInfo)
   save_log(logInfo)
   print("generating audio with elevenLabs")
-  audiogen = generate(text =  info, voice=voice_id)
+  audiogen = generate(text =  info, voice=voiceID)
 
   nameOf = uuidID
   
@@ -205,10 +216,10 @@ def process_image(filename, uuidID):
   return info , input_audio_path, audiogen
 
 
-def justTalk(str):
+def justTalk(str, voice_id):
   audiogen = generate(text =  str, voice=voice_id)
   print(f"playing {str} \n\n")
-  play(audiogen)
+  play(audiogen,)
 
 
 def simpleMSG(thePrompt):
@@ -244,14 +255,15 @@ def triggered_function():
   isProcessing = True
   print("shooting....")
 
+  selected_prompt = load_and_select_random_prompt(promptsFile)
 
   uuidID = str( uuid.uuid4() )
   
   captured_image_path = capture_image(uuidID)
 
-  justTalk( select_random_phrase() )
+  justTalk( select_random_phrase(selected_prompt['character'], selected_prompt['id']) )
 
-  process = process_image(captured_image_path, uuidID)
+  process = process_image(captured_image_path, uuidID, selected_prompt['prompt'], selected_prompt['id'])
   
   #create_video_from_image_and_audio(captured_image_path, process[1], 'videos/' + uuidID + ".mp4" )
   
@@ -267,7 +279,7 @@ def triggered_function():
 
 if __name__ == "__main__":
     print("initializing shakespeare camera")
-    justTalk( simpleMSG("Write me a 10 words very short message in cockney english that informs that we are connected to the internet and ready to start shooting photographs") )
+    justTalk( simpleMSG("Write me a 10 words very short message in cockney english that informs that we are connected to the internet and ready to start shooting photographs") , "lz4hMpuE4rog9Awr6gPH")
 
     GPIO.setmode(GPIO.BCM)  # Use Broadcom pin numbering
     GPIO.setup(14, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Button to GPIO17

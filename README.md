@@ -1,6 +1,6 @@
 # Raspberry Pi Voice-Persona Camera
 
-Welcome to my repository! I'm Luis Guajardo, a Senior Creative Technologist currently working at [Mediamonks LABS(https://labs.monks.com/)], and this is not just any camera—it's a Raspberry Pi-based camera that narrates the content of images it captures using a variety of engaging voices and personas. Each persona offers a unique perspective and style, enriching the visual experience with dynamic, auditory feedback.
+Welcome to my repository! I'm Luis Guajardo, a Senior Creative Technologist currently working at [Mediamonks LABS](https://labs.monks.com/), and this is not just any camera—it's a Raspberry Pi-based camera that narrates the content of images it captures using a variety of engaging voices and personas. Each persona offers a unique perspective and style, enriching the visual experience with dynamic, auditory feedback.
 
 ##About This Project
 This idea began as a part of a demo at Mediamonks Labs where I explored the potential of virtual AI synthetic avatars for Twitch streaming. Inspired to push the boundaries of AI integration in practical devices, I adapted these cutting-edge technologies into this Raspberry Pi camera project. By leveraging OpenAI's Vision API for image analysis and elevenLabs' voice synthesis technology, the camera brings each captured scene to life with distinct narrative voices.

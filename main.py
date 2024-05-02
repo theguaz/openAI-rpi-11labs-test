@@ -8,6 +8,8 @@ import datetime
 import uuid
 import subprocess
 
+import random
+
 #create your config accordingly:
 #api_key = "your_api_key_here"
 #elevenLabsAPiKey = "your_elevenLabs_api_key_here"
@@ -48,6 +50,31 @@ set_api_key(elevenLabsAPiKey)
 thePrompt = "You're a character from a Guy Ritchie movie, you describe by creating a rhyme in shakespearerian style what you see on the image taken by the device it contains you. Take into account common sense and always stay respectful. You're reviewing images from your own point of view, answer as you were browsing social media. \n\nYou'll receive images one at a time, \n\nYou'll never answer with a question, this is a one time conversation with you\n\n It's very important that you begin each answer with a variation of this: \n 'Ok, this is what I see on the image ' "
 
 
+def select_random_phrase():
+    analysisPhrases = [
+        "Analyzing image details...",
+        "Decoding visual data...",
+        "Interpreting the pixels...",
+        "Rendering insights...",
+        "Examining the snapshot...",
+        "Unpacking image content...",
+        "Image analysis underway...",
+        "Breaking down the picture...",
+        "Reading visual information...",
+        "Fetching image details...",
+        "Extracting data from image...",
+        "Converting image to insights...",
+        "Processing visual input...",
+        "Scanning image content...",
+        "Evaluating pictorial elements...",
+        "Assessing image composition...",
+        "Compiling image analysis...",
+        "Deriving insights from image...",
+        "Crunching image data...",
+        "Dissecting the frame..."
+    ]
+    # Select a random phrase from the list
+    return random.choice(analysisPhrases)
 
 # Function to encode the image
 def encode_image(image_path):
@@ -214,6 +241,9 @@ def triggered_function():
   start_time = time.time()
   isProcessing = True
   print("shooting....")
+
+  justTalk( select_random_phrase() )
+
   uuidID = str( uuid.uuid4() )
   
   captured_image_path = capture_image(uuidID)

@@ -261,7 +261,7 @@ def triggered_function():
   
   captured_image_path = capture_image(uuidID)
 
-  justTalk( select_random_phrase(selected_prompt['character'], selected_prompt['id']) )
+  justTalk( select_random_phrase(selected_prompt['character']), selected_prompt['id'] )
 
   process = process_image(captured_image_path, uuidID, selected_prompt['prompt'], selected_prompt['id'])
   

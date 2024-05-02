@@ -46,7 +46,11 @@ I used teh Audio AMP Shim because it does not add much bulk and it also has no s
 
 ### 5. Rpi UPS:
 [A sleek UPS with battery and micro usb connector](https://www.amazon.nl/gp/product/B0BQ3X2W2S/ref=ppx_yo_dt_b_asin_title_o01_s00?ie=UTF8&psc=1)
+
+
 ### 6. Speaker
+[Speaker with the almost same dimensions as the rpi zero](https://www.amazon.nl/gp/product/B0822Z4LPH/ref=ppx_yo_dt_b_asin_title_o03_s00?ie=UTF8&psc=1)
+
 
 ### 7. 3D printed case
 

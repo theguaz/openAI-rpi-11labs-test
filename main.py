@@ -73,7 +73,7 @@ def select_random_phrase(character):
         "Image analysis underway",
         "Breaking down the picture",
         "Reading visual information",
-        "Fetching image details...",
+        "Fetching image details ",
         "Extracting data from image",
         "Converting image to insights",
         "Processing visual input",
@@ -85,7 +85,7 @@ def select_random_phrase(character):
         "Crunching image data",
         "Dissecting the frame"
     ]
-    whoIM = random.choice(analysisPhrases) + " as " + character + " ..."
+    whoIM = random.choice(analysisPhrases) + ", like a  " + character + " ..."
     # Select a random phrase from the list
     return whoIM
 

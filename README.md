@@ -45,7 +45,7 @@ I used teh Audio AMP Shim because it does not add much bulk and it also has no s
 [PIMORONI](https://shop.pimoroni.com/products/audio-amp-shim-3w-mono-amp?variant=32341591064659)
 
 ### 5. Rpi UPS:
-
+[A sleek UPS with battery and micro usb connector](https://www.amazon.nl/gp/product/B0BQ3X2W2S/ref=ppx_yo_dt_b_asin_title_o01_s00?ie=UTF8&psc=1)
 ### 6. Speaker
 
 ### 7. 3D printed case

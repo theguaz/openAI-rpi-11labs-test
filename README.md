@@ -25,3 +25,88 @@ To get started with the Raspberry Pi Voice-Persona Camera, you'll need to instal
 
 ### Setup and Installation
 Follow the individual installation guides provided by each software to properly set up your development environment. Make sure to keep your API keys secure and only use them as described in the project documentation.
+
+
+
+
+## Parts and bits
+### 1. The brain: [Raspberry Pi Zero 2 W](https://www.raspberrypi.com/products/raspberry-pi-zero-2-w/) with headers
+
+I ordered a pre-soldered rpi with male headers so I could plug an Audio Interface to it 
+
+### 2. 
+  
+    
+### 3. Camera: 
+
+
+### 4. Audio Interface (s)
+I used teh Audio AMP Shim because it does not add much bulk and it also has no solder friction fit header:) 
+[PIMORONI](https://shop.pimoroni.com/products/audio-amp-shim-3w-mono-amp?variant=32341591064659)
+
+### 5. Rpi UPS:
+
+### 6. Speaker
+
+### 7. 3D printed case
+
+## How It works
+
+Currently, the `main.py` script running on the Pi:
+- Select a voice using the encoder
+- Takes a photo when you click the encoder button
+- Sends the photo to GPT-4 for analysis based on prompt and gets a string with AI-generated answer
+- Send string to eleven labs with the selected voice as option
+- Play the answer using the speaker
+
+
+## How to set up
+
+1 - Connect to your pi (use a keyboard & monitor or just SSH into it) and update the system on your rpi:
+```shell
+$ sudo apt-get update
+$ sudo apt-get install git cups build-essential libcups2-dev libcupsimage2-dev python3-serial python-pil python-unidecode
+```
+
+2. Clone this repo, install python modules:
+```shell
+$ cd
+$ git clone https://github.com/theguaz/openAI-rpi-11labs-test.git
+$ cd openAI-rpi-11labs-test 
+$ pip install -r requirements.txt
+
+```
+
+3. Connect the Audio interface and setup:
+Plug the interface and connect a speaker to it, then follow the instructions from [Pimoroni website](https://shop.pimoroni.com/products/audio-amp-shim-3w-mono-amp?variant=32341591064659):
+```shell
+git clone https://github.com/pimoroni/pirate-audio
+cd pirate-audio/mopidy
+sudo ./install.sh 
+```
+
+4. Connect and set the camera:
+
+
+5. Create your credentials file, for security I have not included any API keys, so what is expected in main.py is to get the credentials from a config.py file located at the same level as the main file, to do this you need to get your openAI Api key and Eleven labs key and paste them inside your config file:
+```shell
+
+sudo nano config.py
+
+#paste this then replace values:
+api_key = "my_key_xxxxxxxxxxxxxx"
+elevenLabsAPiKey = "my_key_xxxxxxxxxxxxxx"
+
+#ctrl+X to save
+
+```
+
+6. Test your API keys :
+
+
+7. Run the poetry camera script.
+```shell
+$ python main.py
+```
+
+## TODO instructions for connect everything

@@ -1,5 +1,7 @@
 # Raspberry Pi Voice-Persona Camera
 
+![cover image](https://github.com/theguaz/openAI-rpi-11labs-test/blob/main/portada.png?raw=true)
+
 Welcome to my repository! I'm Luis Guajardo, a Senior Creative Technologist currently working at [Mediamonks LABS](https://labs.monks.com/), and this is not just any camera—it's a Raspberry Pi-based camera that narrates the content of images it captures using a variety of engaging voices and personas. Each persona offers a unique perspective and style, enriching the visual experience with dynamic, auditory feedback.
 
 ##About This Project

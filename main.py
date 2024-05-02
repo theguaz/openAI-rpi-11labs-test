@@ -45,7 +45,7 @@ start_time = 0
 
 set_api_key(elevenLabsAPiKey)
 
-thePrompt = "You're a character from a Guy Ritchie movie, a cockney gangster you tell people what you can describe in less than 20 words what you see on the image provided. Take into account common sense and always stay respectful. You're reviewing images from your own point of view, answer as you were browsing social media. \n\nYou'll receive images one at a time, \n\nYou'll never answer with a question, this is a one time conversation with you\n\n It's very important that you begin each answer with a variation of this: \n 'Ok, this is what I see on the image ' "
+thePrompt = "You're a character from a Guy Ritchie movie, you describe by creating a rhyme in shakespearerian style what you see on the image taken by the device it contains you. Take into account common sense and always stay respectful. You're reviewing images from your own point of view, answer as you were browsing social media. \n\nYou'll receive images one at a time, \n\nYou'll never answer with a question, this is a one time conversation with you\n\n It's very important that you begin each answer with a variation of this: \n 'Ok, this is what I see on the image ' "
 
 
 
@@ -105,7 +105,7 @@ def getImageInfo(image_path):
           ]
         }
       ],
-      "max_tokens": 256
+      "max_tokens": 1024
     }
     openAI_response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
     print(openAI_response.json())

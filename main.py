@@ -242,11 +242,13 @@ def triggered_function():
   isProcessing = True
   print("shooting....")
 
-  justTalk( select_random_phrase() )
 
   uuidID = str( uuid.uuid4() )
   
   captured_image_path = capture_image(uuidID)
+
+  justTalk( select_random_phrase() )
+  
   process = process_image(captured_image_path, uuidID)
   
   #create_video_from_image_and_audio(captured_image_path, process[1], 'videos/' + uuidID + ".mp4" )

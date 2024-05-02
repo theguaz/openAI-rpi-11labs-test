@@ -279,7 +279,8 @@ def triggered_function():
 
 if __name__ == "__main__":
     print("initializing shakespeare camera")
-    justTalk( simpleMSG("Write me a 10 words very short message in cockney english that informs that we are connected to the internet and ready to start shooting photographs") , "lz4hMpuE4rog9Awr6gPH")
+    initialVoice = selected_prompt = load_and_select_random_prompt(promptsFile)["id"]
+    justTalk( simpleMSG("Write me a 10 words very short message in cockney english that informs that we are connected to the internet and ready to start shooting photographs") , initialVoice)
 
     GPIO.setmode(GPIO.BCM)  # Use Broadcom pin numbering
     GPIO.setup(14, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Button to GPIO17

@@ -20,6 +20,9 @@ To get started with the Raspberry Pi Voice-Persona Camera, you'll need to instal
 - **elevenLabs API**: This API is used for generating the synthetic voices for the camera's personas. Please create an account to obtain your API keys. [Register with elevenLabs](https://elevenlabs.io/)
 
 ### Modeling and Printing
+
+- I left [my design here](https://a360.co/4a1NXJx) if you want to check it and maybe make your own mods, if not I also provide STL files in the [3Dfiles folder](https://github.com/theguaz/openAI-rpi-11labs-test/tree/main/3Dfiles)
+
 - **Autodesk Fusion360**: This software is used for designing the physical case of the camera. If you plan to modify the case or need to view the designs, you'll need this installed. [Get Autodesk Fusion360](https://www.autodesk.com/products/fusion-360/overview)
 - **Ultimaker Cura**: After designing your case, use Ultimaker Cura to slice the models for 3D printing. This is essential for preparing your print files. [Download Ultimaker Cura](https://ultimaker.com/software/ultimaker-cura)
 

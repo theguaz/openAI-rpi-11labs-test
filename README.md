@@ -21,6 +21,9 @@ To get started with the Raspberry Pi Voice-Persona Camera, you'll need to instal
 
 ### Modeling and Printing
 
+
+![3Dfile](https://github.com/theguaz/openAI-rpi-11labs-test/blob/main/3Dfiles/tha-case.png?raw=true)
+
 - I left [my design here](https://a360.co/4a1NXJx) if you want to check it and maybe make your own mods, if not I also provide STL files in the [3Dfiles folder](https://github.com/theguaz/openAI-rpi-11labs-test/tree/main/3Dfiles)
 
 - **Autodesk Fusion360**: This software is used for designing the physical case of the camera. If you plan to modify the case or need to view the designs, you'll need this installed. [Get Autodesk Fusion360](https://www.autodesk.com/products/fusion-360/overview)

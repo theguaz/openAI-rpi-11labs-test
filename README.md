@@ -84,6 +84,10 @@ git clone https://github.com/pimoroni/pirate-audio
 cd pirate-audio/mopidy
 sudo ./install.sh 
 ```
+Test your speaker:
+```shell
+speaker-test -c2 -twav -l7
+```
 
 4. Connect and set the camera:
 

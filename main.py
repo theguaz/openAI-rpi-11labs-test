@@ -10,6 +10,8 @@ import subprocess
 
 import json
 import random
+import smbus2
+
 
 #create your config accordingly:
 #api_key = "your_api_key_here"
@@ -34,6 +36,14 @@ msgs = ["sht", "ask", "spk", "done"]
 client_process = None
 
 
+# Example usage
+bus_number = 1  # Raspberry Pi I2C bus 1
+battery_soc = read_battery_soc(bus_number)
+if battery_soc is not None:
+    print(f"Battery SOC: {battery_soc:.2f}%")
+else:
+    print("Could not read battery SOC.")
+
 # OpenAI API Key
 
 api_key = config.api_key
@@ -52,6 +62,18 @@ set_api_key(elevenLabsAPiKey)
 
 #thePrompt = "You're a character from a Guy Ritchie movie, you describe by creating a rhyme in shakespearerian style what you see on the image taken by the device it contains you. Take into account common sense and always stay respectful. You're reviewing images from your own point of view, answer as you were browsing social media. \n\nYou'll receive images one at a time, \n\nYou'll never answer with a question, this is a one time conversation with you\n\n It's very important that you begin each answer with a variation of this: \n 'Ok, this is what I see on the image ' "
 
+def read_battery_soc(bus, address=0x32):
+    try:
+        # Open the I2C bus
+        with smbus2.SMBus(bus) as smbus:
+            # Read two bytes from the SOC register (0x04)
+            # MAX17040G typically uses 2 bytes for SOC, with MSB first
+            data = smbus.read_i2c_block_data(address, 0x04, 2)
+            soc = (data[0] << 8 | data[1]) / 256  # Convert the 16-bit value to a percentage
+            return soc
+    except Exception as e:
+        print(f"Error reading from UPS: {e}")
+        return None
 
 def load_and_select_random_prompt(filename):
     # Load the JSON data from a file
@@ -280,7 +302,14 @@ def triggered_function():
 if __name__ == "__main__":
     print("initializing shakespeare camera")
     initialVoice = selected_prompt = load_and_select_random_prompt(promptsFile)["id"]
-    justTalk( simpleMSG("Write me a 10 words very short message in cockney english that informs that we are connected to the internet and ready to start shooting photographs") , initialVoice)
+    bus_number = 1  # Raspberry Pi I2C bus 1
+    battery_soc = read_battery_soc(bus_number)
+    if battery_soc is not None:
+        print(f"Battery SOC: {battery_soc:.2f}%")
+    else:
+        print("Could not read battery SOC.")
+
+    justTalk( simpleMSG("Write me a 10 words very short message in cockney english that informs that we are connected to the internet and ready to start shooting photographs") + f", and my battery SOC is: {battery_soc:.2f}%"  , initialVoice)
 
     GPIO.setmode(GPIO.BCM)  # Use Broadcom pin numbering
     GPIO.setup(14, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Button to GPIO17

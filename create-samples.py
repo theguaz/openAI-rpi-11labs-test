@@ -32,7 +32,7 @@ from elevenlabs import generate, play, stream, voices, save
 from elevenlabs import set_api_key
 
 
-promptsFile = '../prompts.json'
+promptsFile = 'prompts.json'
 
 
 def loadPrompts(filename):

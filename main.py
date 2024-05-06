@@ -303,7 +303,7 @@ def triggered_function():
 
 if __name__ == "__main__":
     print("initializing persona camera")
-    initialVoice = selected_prompt = load_and_select_random_prompt(promptsFile)["id"]
+    initialVoice  = load_and_select_random_prompt(promptsFile)["id"]
     
     bus_number = 1  # Raspberry Pi I2C bus 1
     battery_soc = read_battery_soc(bus_number)

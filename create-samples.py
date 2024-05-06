@@ -31,6 +31,16 @@ import openai
 from elevenlabs import generate, play, stream, voices, save
 from elevenlabs import set_api_key
 
+
+api_key = config.api_key
+elevenLabsAPiKey = config.elevenLabsAPiKey
+
+
+set_api_key(elevenLabsAPiKey)
+
+
+
+
 projectFolder = '/home/pi/openAI-rpi-11labs-test/'
 
 promptsFile = 'prompts.json'

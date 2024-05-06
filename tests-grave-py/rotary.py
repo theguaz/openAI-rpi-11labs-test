@@ -84,7 +84,7 @@ def sw_callback(channel):
         last_rotation_time = current_time
 
 # Attach the callback functions to GPIO events
-GPIO.add_event_detect(CLK, GPIO.FALLING, callback=clk_callback, bouncetime=int(debounce_time * 1000))
+GPIO.add_event_detect(CLK, GPIO.RISING, callback=clk_callback, bouncetime=int(debounce_time * 1000))
 GPIO.add_event_detect(SW, GPIO.FALLING, callback=sw_callback, bouncetime=int(debounce_time * 1000))
 
 try:

@@ -31,8 +31,6 @@ import openai
 from elevenlabs import generate, play, stream, voices, save
 from elevenlabs import set_api_key
 
-msgs = ["sht", "ask", "spk", "done"]
-
 client_process = None
 
 def read_battery_soc(bus, address=0x32):

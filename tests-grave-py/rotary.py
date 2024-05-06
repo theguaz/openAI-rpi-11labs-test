@@ -64,7 +64,7 @@ def clk_callback(channel):
     current_time = time.time()
     if (current_time - last_rotation_time) > debounce_time:
         dtState = GPIO.input(DT)
-        
+
         if dtState != clkLastState:
             current_item += 1
         else:
@@ -72,7 +72,7 @@ def clk_callback(channel):
         current_item %= len(items)  # Wrap around
         
 
-        currentFile = projectFolder + "init_audios/" + items[current_item]['id'] + "_selected.wav"
+        currentFile = projectFolder + "init_audios/" + items[current_item]['id'] + "_select.wav"
         print("Selected:", currentFile)
         playsound(currentFile)
 

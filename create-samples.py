@@ -40,7 +40,6 @@ set_api_key(elevenLabsAPiKey)
 
 
 
-
 projectFolder = '/home/pi/openAI-rpi-11labs-test/'
 
 promptsFile = 'prompts.json'

@@ -51,7 +51,7 @@ projectFolder = '/home/pi/openAI-rpi-11labs-test/'
 
 promptsFile = 'prompts.json'
 
-items = None
+items = []
 
 
 with open(projectFolder + promptsFile, 'r') as file:

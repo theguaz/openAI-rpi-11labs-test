@@ -17,9 +17,26 @@ last_rotation_time = 0
 debounce_time = 0.3  # Debounce time in seconds
 
 # Array of items to select from
-items = ["Item 0", "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7", "Item 8", "Item 9"]
+
 current_item = 0  # Start with the first item
 clkLastState = GPIO.input(CLK)
+
+projectFolder = '/home/pi/openAI-rpi-11labs-test/'
+
+promptsFile = 'prompts.json'
+
+items = None
+
+def loadPrompts(filename):
+    # Load the JSON data from a file
+    with open(filename, 'r') as file:
+        items = json.load(file)
+        
+
+loadPrompts(promptsFile)
+
+
+
 
 def clk_callback(channel):
     global current_item, last_rotation_time, clkLastState
@@ -31,7 +48,12 @@ def clk_callback(channel):
         else:
             current_item -= 1
         current_item %= len(items)  # Wrap around
-        print("Selected:", items[current_item])
+        
+
+        currentFile = projectFolder + "init_audios/" + items[current_item]['id'] + "_selected.wav"
+        print("Selected:", currentFile)
+        playsound(currentFile)
+
         last_rotation_time = current_time
     clkLastState = GPIO.input(CLK)
 

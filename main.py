@@ -274,7 +274,6 @@ def triggered_function():
 
   playsound('/home/pi/openAI-rpi-11labs-test/shutter.wav')
   
-
   start_time = time.time()
   isProcessing = True
   print("shooting....")

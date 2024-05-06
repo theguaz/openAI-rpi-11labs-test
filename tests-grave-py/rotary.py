@@ -1,68 +1,28 @@
-import RPi.GPIO as GPIO
-import time
-import json
+from RPi import GPIO
+from time import sleep
 
+clk = 17
+dt = 18
 
-from playsound import playsound
-
-# Define GPIO pins
-CLK = 17
-DT = 27
-SW = 22
-
-# Setup GPIO
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(CLK, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(DT, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(SW, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(clk, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(dt, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
-# Variables to track the state
-clkLastState = GPIO.input(CLK)
-dtLastState = GPIO.input(DT)
-
-# Array of items to select from
-current_item = 0  # Start with the first item
-projectFolder = '/home/pi/openAI-rpi-11labs-test/'
-promptsFile = 'prompts.json'
-items = []
-
-with open(projectFolder + promptsFile, 'r') as file:
-    items = json.load(file)['prompts']
-
-def update_position():
-    global current_item, clkLastState, dtLastState
-    clkState = GPIO.input(CLK)
-    dtState = GPIO.input(DT)
-    
-    # Check for state change
-    if clkState != clkLastState or dtState != dtLastState:
-        if clkState != clkLastState:  # If the clock has changed
-            if dtState != clkState:  # Clock and data states are different
-                current_item += 1
-            else:  # Clock and data states are the same
-                current_item -= 1
-            
-            current_item %= len(items)  # Ensure the current_item index wraps around
-            currentFile = projectFolder + "init_audios/" + items[current_item]['id'] + "_select.wav"
-            print("Selected:", currentFile)
-            print("current_item:", current_item)
-            #playsound(currentFile)
-        
-        # Save the last states for the next comparison
-        clkLastState = clkState
-        dtLastState = dtState
-
-def button_pressed_callback(channel):
-    # You could add actions here for when the button is pressed
-    print("Button Pressed - Current selection:", items[current_item])
-
-# Attach the callback function to GPIO events
-GPIO.add_event_detect(CLK, GPIO.BOTH, callback=lambda channel: update_position())
-GPIO.add_event_detect(SW, GPIO.FALLING, callback=button_pressed_callback, bouncetime=300)
+counter = 0
+clkLastState = GPIO.input(clk)
 
 try:
-    # Keep your main program running
-    while True:
-        time.sleep(0.1)  # Reduces CPU load
+
+        while True:
+                clkState = GPIO.input(clk)
+                dtState = GPIO.input(dt)
+                if clkState != clkLastState:
+                        if dtState != clkState:
+                                counter += 1
+                        else:
+                                counter -= 1
+                        print counter
+                clkLastState = clkState
+                sleep(0.01)
 finally:
-    GPIO.cleanup()  # Clean up GPIO on exit
+        GPIO.cleanup()

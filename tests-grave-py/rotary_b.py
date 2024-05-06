@@ -46,6 +46,6 @@ def get_encoder_turn():
 try:
     while True:
         get_encoder_turn()
-        time.sleep(0.001)  # Poll at 1 ms intervals
+        time.sleep(0.5)  # Poll at 1 ms intervals
 finally:
     GPIO.cleanup()  # Clean up GPIO on exit

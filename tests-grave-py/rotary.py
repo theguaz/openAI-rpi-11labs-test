@@ -45,7 +45,8 @@ def update_position():
             current_item %= len(items)  # Ensure the current_item index wraps around
             currentFile = projectFolder + "init_audios/" + items[current_item]['id'] + "_select.wav"
             print("Selected:", currentFile)
-            playsound(currentFile)
+            print("current_item:", current_item)
+            #playsound(currentFile)
         
         # Save the last states for the next comparison
         clkLastState = clkState

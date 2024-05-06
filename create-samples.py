@@ -65,7 +65,5 @@ def loadPrompts(filename):
 
 
 if __name__ == "__main__":
-  #loadPrompts(promptsFile)
-  response = voices.get_all()
-  audio = generate(text="Hello there!", voice=response.voices[0])
-  print(response.voices)
+  loadPrompts(promptsFile)
+  

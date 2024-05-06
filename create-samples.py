@@ -51,4 +51,4 @@ def saveTalk(str, voice_id):
 
 
 
-loadPrompts()
+loadPrompts(promptsFile)

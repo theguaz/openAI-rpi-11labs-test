@@ -33,7 +33,7 @@ def loadPrompts(filename):
         items = json.load(file)
         
 
-loadPrompts(promptsFile)
+loadPrompts(projectFolder + promptsFile)
 
 
 

@@ -41,7 +41,7 @@ def saveTalk(str, voice_id):
   input_audio_path = projectFolder + "audios/" + voice_id + '_select.wav'
   play(audiogen)
   save(audiogen,input_audio_path)
-  
+
 def loadPrompts(filename):
     # Load the JSON data from a file
     with open(filename, 'r') as file:
@@ -56,3 +56,6 @@ def loadPrompts(filename):
 
 if __name__ == "__main__":
   loadPrompts(promptsFile)
+  response = voices.get_all()
+  audio = generate(text="Hello there!", voice=response.voices[0])
+  print(response.voices)

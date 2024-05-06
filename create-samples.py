@@ -44,7 +44,7 @@ def loadPrompts(filename):
         	print(f"char: {e['character']} id: {e['id']}")
           saveTalk( e['character'],  e['id'] )
 
-
+          
 def saveTalk(str, voice_id):
   audiogen = generate(text =  str, voice=voice_id)
   print(f"playing {str} \n\n")

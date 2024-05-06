@@ -1,32 +1,19 @@
-from RPi import GPIO
-from time import sleep
+import pigpio
 
-clk = 17
-dt = 27
+ROTARY_CLK = 17
+ROTARY_DT = 27
+ROTARY_BUTTON = 22
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(clk, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-GPIO.setup(dt, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+pi = pigpio.pi()
 
-counter = 0
-clkLastState = GPIO.input(clk)
+def callback(way):
+    print("Turned", "Right" if way > 0 else "Left")
 
-def callback(channel):
-    global counter, clkLastState
-    clkState = GPIO.input(clk)
-    dtState = GPIO.input(dt)
-    if clkState != clkLastState:
-        if dtState != clkState:
-            counter += 1
-        else:
-            counter -= 1
-        print(counter)
-    clkLastState = clkState
-
-GPIO.add_event_detect(clk, GPIO.BOTH, callback=callback, bouncetime=20)
+decoder = pigpio.decoder(pi, ROTARY_CLK, ROTARY_DT, callback)
 
 try:
     while True:
-        sleep(1)  # Sleep to reduce CPU usage, main loop does nothing.
-finally:
-    GPIO.cleanup()
+        time.sleep(1)
+except KeyboardInterrupt:
+    decoder.cancel()
+    pi.stop()

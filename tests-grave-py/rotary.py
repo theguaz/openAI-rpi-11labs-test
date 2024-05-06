@@ -40,7 +40,7 @@ GPIO.setup(SW, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 # Variables to hold the state and timing for debouncing
 last_rotation_time = 0
-debounce_time = 0.3  # Debounce time in seconds
+debounce_time = 0.75  # Debounce time in seconds
 
 # Array of items to select from
 

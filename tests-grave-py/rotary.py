@@ -55,7 +55,9 @@ items = []
 
 
 with open(projectFolder + promptsFile, 'r') as file:
-    items = json.load(file)
+    items = json.load(file)['prompts']
+
+print(items)
 
 def clk_callback(channel):
     global current_item, last_rotation_time, clkLastState

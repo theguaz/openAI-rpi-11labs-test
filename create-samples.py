@@ -42,7 +42,7 @@ def loadPrompts(filename):
         data = json.load(file)
         for e in data["prompts"]:
         	print(f"char: {e['character']} id: {e['id']}")
-          saveTalk(e['character'], e['id'])
+          saveTalk( e['character'],  e['id'] )
 
 
 def saveTalk(str, voice_id):

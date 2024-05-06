@@ -74,7 +74,7 @@ def clk_callback(channel):
 
         currentFile = projectFolder + "init_audios/" + items[current_item]['id'] + "_select.wav"
         print("Selected:", currentFile)
-        playsound(currentFile)
+        #playsound(currentFile)
 
         last_rotation_time = current_time
     clkLastState = GPIO.input(CLK)

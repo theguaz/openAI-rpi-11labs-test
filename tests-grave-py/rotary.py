@@ -70,13 +70,10 @@ def clk_callback(channel):
         else:
             current_item -= 1
         current_item %= len(items)  # Wrap around
-        
-
-        currentFile = projectFolder + "init_audios/" + items[current_item]['id'] + "_select.wav"
-        print("Selected:", currentFile)
-        playsound(currentFile)
-
         last_rotation_time = current_time
+    currentFile = projectFolder + "init_audios/" + items[current_item]['id'] + "_select.wav"
+    print("Selected:", currentFile)
+    playsound(currentFile)
     clkLastState = GPIO.input(CLK)
 
 def sw_callback(channel):

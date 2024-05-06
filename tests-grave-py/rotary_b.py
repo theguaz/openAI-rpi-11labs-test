@@ -14,7 +14,7 @@ GPIO.setup(DT, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 last_clk_state = GPIO.input(CLK)
 last_dt_state = GPIO.input(DT)
 last_time = time.time()
-debounce_interval = 0.02  # 20 milliseconds
+debounce_interval = 0.15  # 20 milliseconds
 
 counter = 0
 
@@ -46,6 +46,6 @@ def get_encoder_turn():
 try:
     while True:
         get_encoder_turn()
-        time.sleep(0.5)  # Poll at 1 ms intervals
+        time.sleep(0.01)  # Poll at 1 ms intervals
 finally:
     GPIO.cleanup()  # Clean up GPIO on exit

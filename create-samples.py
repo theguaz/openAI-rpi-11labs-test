@@ -41,7 +41,7 @@ def loadPrompts(filename):
     with open(filename, 'r') as file:
         data = json.load(file)
         for e in data["prompts"]:
-        	print(f"char: {e['character']} id: {e['id']}")
+          print(f"char: {e['character']} id: {e['id']}")
           saveTalk(e['character'],e['id'])
 
 

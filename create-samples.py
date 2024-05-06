@@ -46,7 +46,7 @@ def loadPrompts(filename):
 
 
 def saveTalk(str, voice_id):
-  audiogen = generate(text =  str, voice=voice_id)
+  audiogen = generate(text=str, voice=voice_id)
   print(f"playing {str} \n\n")
   input_audio_path = projectFolder + "audios/" + voice_id + '_select.wav'
   play(audiogen)

@@ -53,16 +53,9 @@ promptsFile = 'prompts.json'
 
 items = None
 
-def loadPrompts(filename):
-    # Load the JSON data from a file
-    with open(filename, 'r') as file:
-        items = json.load(file)
-        
 
-loadPrompts(projectFolder + promptsFile)
-
-
-
+with open(filename, 'r') as file:
+    items = json.load(projectFolder + promptsFile)
 
 def clk_callback(channel):
     global current_item, last_rotation_time, clkLastState

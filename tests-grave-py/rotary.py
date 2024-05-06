@@ -1,31 +1,6 @@
-import base64
-import requests
-import os
-import picamera
-import time
-import os
-import datetime
-import uuid
-import subprocess
-
-import json
-import random
-import smbus2
-
-
-#create your config accordingly:
-#api_key = "your_api_key_here"
-#elevenLabsAPiKey = "your_elevenLabs_api_key_here"
-#voice_id = "your_voice_id_here"
-from playsound import playsound
-
-
 import RPi.GPIO as GPIO
-import sys
-
-
-from PIL import Image, ImageDraw, ImageFont
-
+import time
+from playsound import playsound
 
 # Define GPIO pins
 CLK = 17
@@ -38,59 +13,52 @@ GPIO.setup(CLK, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(DT, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(SW, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-# Variables to hold the state and timing for debouncing
-last_rotation_time = 0
-debounce_time = 0.75  # Debounce time in seconds
+# Variables to track the state
+clkLastState = GPIO.input(CLK)
+dtLastState = GPIO.input(DT)
 
 # Array of items to select from
-
 current_item = 0  # Start with the first item
-clkLastState = GPIO.input(CLK)
-
 projectFolder = '/home/pi/openAI-rpi-11labs-test/'
-
 promptsFile = 'prompts.json'
-
 items = []
-
 
 with open(projectFolder + promptsFile, 'r') as file:
     items = json.load(file)['prompts']
 
-print(items)
+def update_position():
+    global current_item, clkLastState, dtLastState
+    clkState = GPIO.input(CLK)
+    dtState = GPIO.input(DT)
+    
+    # Check for state change
+    if clkState != clkLastState or dtState != dtLastState:
+        if clkState != clkLastState:  # If the clock has changed
+            if dtState != clkState:  # Clock and data states are different
+                current_item += 1
+            else:  # Clock and data states are the same
+                current_item -= 1
+            
+            current_item %= len(items)  # Ensure the current_item index wraps around
+            currentFile = projectFolder + "init_audios/" + items[current_item]['id'] + "_select.wav"
+            print("Selected:", currentFile)
+            playsound(currentFile)
+        
+        # Save the last states for the next comparison
+        clkLastState = clkState
+        dtLastState = dtState
 
-def clk_callback(channel):
-    global current_item, last_rotation_time, clkLastState
-    current_time = time.time()
-    if (current_time - last_rotation_time) > debounce_time:
-        dtState = GPIO.input(DT)
+def button_pressed_callback(channel):
+    # You could add actions here for when the button is pressed
+    print("Button Pressed - Current selection:", items[current_item])
 
-        if dtState != clkLastState:
-            current_item += 1
-        else:
-            current_item -= 1
-        current_item %= len(items)  # Wrap around
-        last_rotation_time = current_time
-    currentFile = projectFolder + "init_audios/" + items[current_item]['id'] + "_select.wav"
-    print("Selected:", currentFile)
-    playsound(currentFile)
-    clkLastState = GPIO.input(CLK)
-
-def sw_callback(channel):
-    global last_rotation_time
-    current_time = time.time()
-    if (current_time - last_rotation_time) > debounce_time:
-        print("Button Pressed - Current selection:", items[current_item])
-        last_rotation_time = current_time
-
-# Attach the callback functions to GPIO events
-GPIO.add_event_detect(CLK, GPIO.RISING, callback=clk_callback, bouncetime=int(debounce_time * 1000))
-GPIO.add_event_detect(SW, GPIO.FALLING, callback=sw_callback, bouncetime=int(debounce_time * 1000))
+# Attach the callback function to GPIO events
+GPIO.add_event_detect(CLK, GPIO.BOTH, callback=lambda channel: update_position())
+GPIO.add_event_detect(SW, GPIO.FALLING, callback=button_pressed_callback, bouncetime=300)
 
 try:
     # Keep your main program running
     while True:
-        time.sleep(1)  # You can change this to a very long sleep as it's just to keep the script running
-
+        time.sleep(0.1)  # Reduces CPU load
 finally:
     GPIO.cleanup()  # Clean up GPIO on exit

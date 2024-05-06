@@ -50,5 +50,5 @@ def saveTalk(str, voice_id):
   save(audiogen,)
 
 
-if __name__ == "__main__":
-	loadPrompts()
+
+loadPrompts()

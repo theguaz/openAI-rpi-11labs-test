@@ -1,52 +1,68 @@
 import RPi.GPIO as GPIO
 import time
+import json
+
+
+from playsound import playsound
 
 # Define GPIO pins
 CLK = 17
 DT = 27
+SW = 22
 
 # Setup GPIO
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(CLK, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(DT, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(SW, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-# State Encoding
-states = {
-    '00': 0,
-    '01': 1,
-    '10': 2,
-    '11': 3
-}
+# Variables to track the state
+clkLastState = GPIO.input(CLK)
+dtLastState = GPIO.input(DT)
 
-# Valid transitions from current state to next state
-# This table is specific to how your rotary encoder might behave. This is a common pattern but check your device specs.
-transition_table = [
-    [0, 1, -1, 0],
-    [-1, 0, 0, -1],
-    [0, -1, 0, 1],
-    [1, 0, -1, 0]
-]
+# Array of items to select from
+current_item = 0  # Start with the first item
+projectFolder = '/home/pi/openAI-rpi-11labs-test/'
+promptsFile = 'prompts.json'
+items = []
 
-current_state = states[f'{GPIO.input(CLK)}{GPIO.input(DT)}']
-counter = 0
+with open(projectFolder + promptsFile, 'r') as file:
+    items = json.load(file)['prompts']
 
-def read_encoder():
-    global current_state, counter
-    clk_state = GPIO.input(CLK)
-    dt_state = GPIO.input(DT)
-    next_state = states[f'{clk_state}{dt_state}']
-    val = transition_table[current_state][next_state]
-    if val != -1:
-        counter += val
-        print("Counter:", counter)
-    current_state = next_state
+def update_position():
+    global current_item, clkLastState, dtLastState
+    clkState = GPIO.input(CLK)
+    dtState = GPIO.input(DT)
+    
+    # Check for state change
+    if clkState != clkLastState or dtState != dtLastState:
+        if clkState != clkLastState:  # If the clock has changed
+            if dtState != clkState:  # Clock and data states are different
+                current_item += 1
+            else:  # Clock and data states are the same
+                current_item -= 1
+            
+            current_item %= len(items)  # Ensure the current_item index wraps around
+            currentFile = projectFolder + "init_audios/" + items[current_item]['id'] + "_select.wav"
+            print("Selected:", currentFile)
+            print("current_item:", current_item)
+            #playsound(currentFile)
+        
+        # Save the last states for the next comparison
+        clkLastState = clkState
+        dtLastState = dtState
+
+def button_pressed_callback(channel):
+    # You could add actions here for when the button is pressed
+    print("Button Pressed - Current selection:", items[current_item])
 
 # Attach the callback function to GPIO events
-GPIO.add_event_detect(CLK, GPIO.BOTH, callback=lambda channel: read_encoder())
-GPIO.add_event_detect(DT, GPIO.BOTH, callback=lambda channel: read_encoder())
+GPIO.add_event_detect(CLK, GPIO.BOTH, callback=lambda channel: update_position())
+GPIO.add_event_detect(SW, GPIO.FALLING, callback=button_pressed_callback, bouncetime=300)
 
 try:
+    # Keep your main program running
     while True:
-        time.sleep(0.1)  # Reduce CPU usage
+        time.sleep(0.1)  # Reduces CPU load
 finally:
     GPIO.cleanup()  # Clean up GPIO on exit

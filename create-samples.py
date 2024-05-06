@@ -31,6 +31,7 @@ import openai
 from elevenlabs import generate, play, stream, voices, save
 from elevenlabs import set_api_key
 
+projectFolder = '/home/pi/openAI-rpi-11labs-test/'
 
 promptsFile = 'prompts.json'
 
@@ -41,12 +42,15 @@ def loadPrompts(filename):
         data = json.load(file)
         for e in data["prompts"]:
         	print(f"char: {e['character']} id: {e['id']}")
+          saveTalk(e['character'], e['id'])
 
 
 def saveTalk(str, voice_id):
   audiogen = generate(text =  str, voice=voice_id)
   print(f"playing {str} \n\n")
-  save(audiogen,)
+  input_audio_path = projectFolder + "audios/" + voice_id + '_select.wav'
+  play(audiogen)
+  save(audiogen,input_audio_path)
 
 
 

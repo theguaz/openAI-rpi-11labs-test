@@ -31,6 +31,6 @@ GPIO.add_event_detect(clk, GPIO.BOTH, callback=rotary_callback, bouncetime=300)
 
 try:
     while True:
-        time.sleep(10)
+        time.sleep(0.01)
 except KeyboardInterrupt:
     GPIO.cleanup()

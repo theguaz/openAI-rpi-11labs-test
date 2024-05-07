@@ -17,7 +17,7 @@ with open(projectFolder + promptsFile, 'r') as file:
     items = json.load(file)['prompts']
 
 
-def tellpos(count):
+def tellpos():
     global current_item, currentFile, canread
 
 
@@ -32,11 +32,13 @@ def cwTurn():
     global current_item
     current_item += 1
     print("CW Turn")
+    tellpos()
 
 def ccwTurn():
     global current_item
     current_item -= 1
     print("CCW Turn")
+    tellpos()
 
 def buttonPushed():
     print("Button Pushed")

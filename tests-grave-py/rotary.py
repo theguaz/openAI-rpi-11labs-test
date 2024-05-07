@@ -29,6 +29,14 @@ items = []
 with open(projectFolder + promptsFile, 'r') as file:
     items = json.load(file)['prompts']
 
+
+def tellpos(current_item):
+    global current_item, currentFile
+    current_item %= len(items)  # Ensure the current_item index wraps around
+    currentFile = projectFolder + "init_audios/" + items[current_item]['id'] + "_select.wav"
+    print("Selected:", currentFile)
+    print("current_item:", current_item)
+
 def update_position():
     global current_item, clkLastState, dtLastState
     clkState = GPIO.input(CLK)
@@ -39,14 +47,12 @@ def update_position():
         if clkState != clkLastState:  # If the clock has changed
             if dtState != clkState:  # Clock and data states are different
                 current_item += 1
+                tellpos(current_item)
+                break
             else:  # Clock and data states are the same
                 current_item -= 1
-            
-            current_item %= len(items)  # Ensure the current_item index wraps around
-            currentFile = projectFolder + "init_audios/" + items[current_item]['id'] + "_select.wav"
-            print("Selected:", currentFile)
-            print("current_item:", current_item)
-            #playsound(currentFile)
+                tellpos(current_item)
+                break
         
         # Save the last states for the next comparison
         clkLastState = clkState

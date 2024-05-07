@@ -24,8 +24,8 @@ def rotary_callback(channel):
     clkLastState = clkState
 
 # Attach event to pin
-GPIO.add_event_detect(clk, GPIO.RISING, callback=rotary_callback_rising, bouncetime=100)
-GPIO.add_event_detect(clk, GPIO.FALLING, callback=rotary_callback_falling, bouncetime=100)
+GPIO.add_event_detect(clk, GPIO.RISING, callback=rotary_callback, bouncetime=100)
+GPIO.add_event_detect(clk, GPIO.FALLING, callback=rotary_callback, bouncetime=100)
 
 try:
     while True:

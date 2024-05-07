@@ -44,7 +44,7 @@ def buttonPushed():
     print("Button Pushed")
 
 def valueChanged(count):
-    #print(count)
+    print(count)
 
 
 

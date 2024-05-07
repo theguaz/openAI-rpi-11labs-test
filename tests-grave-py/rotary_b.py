@@ -1,11 +1,41 @@
 from RPi_GPIO_Rotary import rotary
 import time
 
+import json
+
+
+from playsound import playsound
+
+# Array of items to select from
+current_item = 0  # Start with the first item
+projectFolder = '/home/pi/openAI-rpi-11labs-test/'
+promptsFile = 'prompts.json'
+items = []
+
+
+with open(projectFolder + promptsFile, 'r') as file:
+    items = json.load(file)['prompts']
+
+
+def tellpos(count):
+    global current_item, currentFile, canread
+
+
+
+    current_item %= len(items)  # Ensure the current_item index wraps around
+    currentFile = projectFolder + "init_audios/" + items[current_item]['id'] + "_select.wav"
+    print("Selected:", currentFile)
+    print("current_item:", current_item)
+    #playsound(currentFile)
 
 def cwTurn():
+    global current_item
+    current_item += 1
     print("CW Turn")
 
 def ccwTurn():
+    global current_item
+    current_item -= 1
     print("CCW Turn")
 
 def buttonPushed():
@@ -13,6 +43,10 @@ def buttonPushed():
 
 def valueChanged(count):
     print(count)
+
+
+
+
 
 
 ## Initialise (clk, dt, sw, ticks)

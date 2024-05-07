@@ -21,5 +21,10 @@ obj = rotary.Rotary(17,27,22,2)
 obj.register(increment=cwTurn, decrement=ccwTurn)
 obj.register(pressed=buttonPushed, onchange=valueChanged)
 obj.start()
-time.sleep(5)
-obj.stop()
+
+try:
+    # Keep your main program running
+    while True:
+        time.sleep(0.1)  # Reduces CPU load
+finally:
+    GPIO.cleanup()  # Clean up GPIO on exit

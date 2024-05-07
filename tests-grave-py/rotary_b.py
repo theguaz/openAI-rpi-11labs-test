@@ -26,7 +26,7 @@ def tellpos():
     currentFile = projectFolder + "init_audios/" + items[current_item]['id'] + "_select.wav"
     print("Selected:", currentFile)
     print("current_item:", current_item)
-    #playsound(currentFile)
+    playsound(currentFile)
 
 def cwTurn():
     global current_item
@@ -44,7 +44,7 @@ def buttonPushed():
     print("Button Pushed")
 
 def valueChanged(count):
-    print(count)
+    #print(count)
 
 
 

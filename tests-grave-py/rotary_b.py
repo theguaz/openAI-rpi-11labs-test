@@ -12,7 +12,18 @@ GPIO.setup(dt, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 # Initial state
 clkLastState = GPIO.input(clk)
 
-def rotary_callback(channel):
+def rotary_callback_raising(channel):
+    global clkLastState
+    clkState = GPIO.input(clk)
+    dtState = GPIO.input(dt)
+    if clkState != clkLastState:
+        if dtState != clkState:
+            print("Rotated Clockwise")
+        else:
+            print("Rotated Counterclockwise")
+    clkLastState = clkState
+
+def rotary_callback_falling(channel):
     global clkLastState
     clkState = GPIO.input(clk)
     dtState = GPIO.input(dt)
@@ -24,8 +35,8 @@ def rotary_callback(channel):
     clkLastState = clkState
 
 # Attach event to pin
-GPIO.add_event_detect(clk, GPIO.RISING, callback=rotary_callback, bouncetime=100)
-GPIO.add_event_detect(clk, GPIO.FALLING, callback=rotary_callback, bouncetime=100)
+GPIO.add_event_detect(clk, GPIO.RISING, callback=rotary_callback_raising, bouncetime=100)
+GPIO.add_event_detect(clk, GPIO.FALLING, callback=rotary_callback_falling, bouncetime=100)
 
 try:
     while True:

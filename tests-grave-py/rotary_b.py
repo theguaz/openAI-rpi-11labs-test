@@ -16,7 +16,7 @@ def valueChanged(count):
 
 
 ## Initialise (clk, dt, sw, ticks)
-obj = rotary.Rotary(17,27,22,3)
+obj = rotary.Rotary(17,27,22,2)
 
 obj.register(increment=cwTurn, decrement=ccwTurn)
 obj.register(pressed=buttonPushed, onchange=valueChanged)

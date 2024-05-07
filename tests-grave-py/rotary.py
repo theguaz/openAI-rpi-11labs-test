@@ -30,8 +30,9 @@ with open(projectFolder + promptsFile, 'r') as file:
     items = json.load(file)['prompts']
 
 
-def tellpos(current_item):
+def tellpos(current_i):
     global current_item, currentFile
+    current_item = current_i
     current_item %= len(items)  # Ensure the current_item index wraps around
     currentFile = projectFolder + "init_audios/" + items[current_item]['id'] + "_select.wav"
     print("Selected:", currentFile)

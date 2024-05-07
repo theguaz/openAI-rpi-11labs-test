@@ -41,7 +41,7 @@ def tellpos(current_i):
     print("Selected:", currentFile)
     print("current_item:", current_item)
     playsound(currentFile)
-    sleep(1)
+    time.sleep(1)
     canread = True
 
 

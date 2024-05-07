@@ -26,17 +26,23 @@ projectFolder = '/home/pi/openAI-rpi-11labs-test/'
 promptsFile = 'prompts.json'
 items = []
 
+canread = True
+
 with open(projectFolder + promptsFile, 'r') as file:
     items = json.load(file)['prompts']
 
 
 def tellpos(current_i):
-    global current_item, currentFile
+    global current_item, currentFile, canread
+    canread = False
     current_item = current_i
     current_item %= len(items)  # Ensure the current_item index wraps around
     currentFile = projectFolder + "init_audios/" + items[current_item]['id'] + "_select.wav"
     print("Selected:", currentFile)
     print("current_item:", current_item)
+    playsound(currentFile)
+    canread = True
+
 
 def update_position():
     global current_item, clkLastState, dtLastState
@@ -48,12 +54,14 @@ def update_position():
         if clkState != clkLastState:  # If the clock has changed
             if dtState != clkState:  # Clock and data states are different
                 current_item += 1
-                tellpos(current_item)
-                break
+                if canread == True:
+                    tellpos(current_item)
+                
             else:  # Clock and data states are the same
                 current_item -= 1
-                tellpos(current_item)
-                break
+                if canread == True:
+                    tellpos(current_item)
+                
         
         # Save the last states for the next comparison
         clkLastState = clkState

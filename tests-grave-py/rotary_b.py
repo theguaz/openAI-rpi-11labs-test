@@ -1,22 +1,36 @@
 import RPi.GPIO as GPIO
+import time
 
 GPIO.setmode(GPIO.BCM)
-clk = 17  # Adjust pin numbers accordingly
-dt = 27
+
+# Set up pins
+clk = 17  # Change as necessary
+dt = 27   # Change as necessary
 GPIO.setup(clk, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(dt, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
+# Initialize counter
+counter = 0
+clkLastState = GPIO.input(clk)
 
+def rotary_callback(clk):
+    global counter, clkLastState
+    clkState = GPIO.input(clk)
+    dtState = GPIO.input(dt)
+    if clkState != clkLastState:
+        if dtState != clkState:
+            counter += 1
+        else:
+            counter -= 1
+        print("Counter: ", counter)
+    clkLastState = clkState
+    time.sleep(0.01)  # debounce time
 
+# Add event detection to the CLK pin
+GPIO.add_event_detect(clk, GPIO.BOTH, callback=rotary_callback, bouncetime=300)
 
-def my_callback(channel):
-    state_clk = GPIO.input(clk)
-    state_dt = GPIO.input(dt)
-    if state_clk == 0 and state_dt == 1:
-        print("Rotated Clockwise")
-    elif state_clk == 0 and state_dt == 0:
-        print("Rotated Counterclockwise")
-
-# Use the built-in bouncetime parameter to debounce
-GPIO.add_event_detect(clk, GPIO.FALLING, callback=my_callback, bouncetime=200)
-
+try:
+    while True:
+        time.sleep(10)
+except KeyboardInterrupt:
+    GPIO.cleanup()

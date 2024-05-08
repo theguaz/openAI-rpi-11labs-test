@@ -375,7 +375,7 @@ if __name__ == "__main__":
     else:
         print("Could not read battery SOC.")
 
-    justTalk( simpleMSG(f"Write me a 10 maximum words message in a sarcastic  funny tone like a joke, the message informs that you have internet access and you are ready to start analyzing images of the wprld around you, also the message should be about  how much energy you have based on this percentage: {battery_soc:.2f} %, say the percentage in spanish sometimes. \n\nUse this example of an answer: playing I have a whopping 50.39% de energia, let the image analyzing begin!") , initialVoice)
+    justTalk( simpleMSG(f"Write me a 10 maximum words message in a sarcastic  funny tone like a joke, the message informs that you have internet access and you are ready to start analyzing images of the wprld around you, also the message should be about  how much energy you have based on this percentage: {battery_soc:.2f} %, say the percentage number in other languages sometimes. \n\nUse this example of an answer:I have a whopping 50.39% of enegry, let the image analyzing begin!") , initialVoice)
 
 try:
     # Keep your main program running

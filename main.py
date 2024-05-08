@@ -287,7 +287,7 @@ def simpleMSG(thePrompt):
     msg = openAI_response.json()
     return msg['choices'][0]['message']['content']
 
-def triggered_function():
+def shootImage():
 
   playsound('/home/pi/openAI-rpi-11labs-test/shutter.wav')
   
@@ -295,7 +295,8 @@ def triggered_function():
   isProcessing = True
   print("shooting....")
 
-  selected_prompt = load_and_select_random_prompt(promptsFile)
+  #selected_prompt = load_and_select_random_prompt(promptsFile)
+  selected_prompt = items[current_item]
 
   uuidID = str( uuid.uuid4() )
   
@@ -346,7 +347,7 @@ def ccwTurn():
 
 def buttonPushed():
     print("Button Pushed")
-    triggered_function()
+    shootImage()
 
 def valueChanged(count):
     print(count)
@@ -374,7 +375,7 @@ if __name__ == "__main__":
     else:
         print("Could not read battery SOC.")
 
-    justTalk( simpleMSG("Write me a 10 words very very funny message in english or spanish that informs that we are connected to the internet and ready to start shooting photographs") + f", and my battery SOC is: {battery_soc:.2f}%"  , initialVoice)
+    justTalk( simpleMSG(f"Write me a 10 words very very funny message in english or spanish that informs that we are connected to the internet and ready to start shooting photographs, also make a funny comment about how much energy you have based on this percentage : {battery_soc:.2f} %") , initialVoice)
 
 try:
     # Keep your main program running

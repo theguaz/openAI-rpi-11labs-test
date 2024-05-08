@@ -281,7 +281,11 @@ def simpleMSG(thePrompt):
             ]
           }
         ],
-        "max_tokens": 128
+        "temperature":1.15,
+        "max_tokens":128,
+        "top_p":1,
+        "frequency_penalty":0,
+        "presence_penalty":0
       }
     openAI_response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
     msg = openAI_response.json()

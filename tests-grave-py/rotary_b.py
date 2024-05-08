@@ -33,6 +33,7 @@ def tellpos():
     currentFile = projectFolder + "init_audios/" + items[current_item]['id'] + "_select.wav"
     print("Selected:", currentFile)
     print("current_item:", current_item)
+    print("character selected:", items[current_item]['character'])
     playsound(currentFile)
 
 def cwTurn():

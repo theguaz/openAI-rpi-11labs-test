@@ -269,7 +269,7 @@ def simpleMSG(thePrompt):
       "Authorization": f"Bearer {api_key}"
     }
     payload = {
-        "model": "gpt-3.5-turbo",
+        "model": "gpt-4-turbo",
         "messages": [
           {
             "role": "user",
@@ -374,8 +374,8 @@ if __name__ == "__main__":
         print(f"Battery SOC: {battery_soc:.2f}%")
     else:
         print("Could not read battery SOC.")
-
-    justTalk( simpleMSG(f"Write me a 10 maximum words message in a sarcastic  funny tone like a joke, the message informs that you have internet access and you are ready to start analyzing images of the wprld around you, talk about the {battery_soc:.2f} percentage of battery you have right now. Make funny remarks every time about your energy level.") , initialVoice)
+    
+    justTalk( simpleMSG(f"You are an AI camera that sees the world with robotic eyes, now write a 20 words message in a sarcastic  funny tone like a joke, the message informs that you have internet access and you are ready to start analyzing images of anything around you, talk about the {battery_soc:.2f} percentage of battery you have right now. Make funny remarks every time about your energy level.\n\nNever use any special characters or emojis, be very very imaginative and funny, never forget you are an AI based camera, and beging by saying it loud before your joke\n") , initialVoice)
 
 try:
     # Keep your main program running

@@ -14,7 +14,11 @@ items = []
 
 CLK = 17
 DT = 27
-SW = 22
+SW = 22 #THE BUTTON
+
+
+#2e9f2738-4bf3-4b61-b2a6-aab341e2c2e7
+#2e9f2738-4bf3-4b61-b2a6-aab341e2c2e7_answer.wav
 
 with open(projectFolder + promptsFile, 'r') as file:
     items = json.load(file)['prompts']
@@ -46,6 +50,8 @@ def ccwTurn():
 def buttonPushed():
     print("Button Pushed")
     playsound('/home/pi/openAI-rpi-11labs-test/shutter.wav')
+    time.sleep(1)
+    playsound(projectFolder + "/audios/2e9f2738-4bf3-4b61-b2a6-aab341e2c2e7_answer.wav")
 
 def valueChanged(count):
     print(count)

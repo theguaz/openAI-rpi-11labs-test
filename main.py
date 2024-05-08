@@ -315,10 +315,10 @@ if __name__ == "__main__":
     justTalk( simpleMSG("Write me a 10 words very short message in cockney english that informs that we are connected to the internet and ready to start shooting photographs") + f", and my battery SOC is: {battery_soc:.2f}%"  , initialVoice)
 
     GPIO.setmode(GPIO.BCM)  # Use Broadcom pin numbering
-    GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Button to GPIO17
+    GPIO.setup(SW, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Button to GPIO17
 try:
     while True:
-      button_state = GPIO.input(17)
+      button_state = GPIO.input(SW)
       if button_state == False and isProcessing == False:  # Button is pressed
         triggered_function()
         time.sleep(0.05)  # Add a small delay to debounce

@@ -12,6 +12,9 @@ projectFolder = '/home/pi/openAI-rpi-11labs-test/'
 promptsFile = 'prompts.json'
 items = []
 
+CLK = 17
+DT = 27
+SW = 22
 
 with open(projectFolder + promptsFile, 'r') as file:
     items = json.load(file)['prompts']
@@ -42,17 +45,14 @@ def ccwTurn():
 
 def buttonPushed():
     print("Button Pushed")
+    playsound('/home/pi/openAI-rpi-11labs-test/shutter.wav')
 
 def valueChanged(count):
     print(count)
 
 
-
-
-
-
 ## Initialise (clk, dt, sw, ticks)
-obj = rotary.Rotary(17,27,22,2)
+obj = rotary.Rotary(CLK,DT,SW,2)
 
 obj.register(increment=cwTurn, decrement=ccwTurn)
 obj.register(pressed=buttonPushed, onchange=valueChanged)

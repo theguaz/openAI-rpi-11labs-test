@@ -379,7 +379,7 @@ if __name__ == "__main__":
     else:
         print("Could not read battery SOC.")
     
-    justTalk( simpleMSG(f"You are an AI camera that sees the world with robotic eyes, now write a 20 words message in a sarcastic  funny tone like a joke, the message informs that you have internet access and you are ready to start analyzing images of anything around you, talk about the {battery_soc:.2f} percentage of battery you have right now. Make funny remarks every time about your energy level.\n\nNever use any special characters or emojis, be very very imaginative and funny, never forget you are an AI based camera, talk about that at the beginning of the answer\n") , initialVoice)
+    justTalk( simpleMSG(f"You are an AI camera that sees the world with robotic eyes, now write a 20 words message in a playful tone like a joke, the message informs that you have internet access and you are ready to start analyzing images of anything around you, talk about the {battery_soc:.2f} percentage of battery you have right now. Make funny remarks every time about your energy level.\n\nNever use any special characters or emojis, be very very imaginative and funny, never forget you are an AI based camera, talk about that at the beginning of the answer\n") , initialVoice)
 
 try:
     # Keep your main program running

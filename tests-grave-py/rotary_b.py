@@ -1,6 +1,5 @@
 from RPi_GPIO_Rotary import rotary
 import time
-
 import json
 
 

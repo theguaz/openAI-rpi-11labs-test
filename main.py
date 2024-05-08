@@ -12,6 +12,8 @@ import json
 import random
 import smbus2
 
+from RPi_GPIO_Rotary import rotary
+
 
 #create your config accordingly:
 #api_key = "your_api_key_here"
@@ -31,6 +33,21 @@ import openai
 from elevenlabs import generate, play, stream, voices, save
 from elevenlabs import set_api_key
 
+
+
+# Array of items to select from
+current_item = 0  # Start with the first item
+projectFolder = '/home/pi/openAI-rpi-11labs-test/'
+promptsFile = 'prompts.json'
+items = []
+
+CLK = 17
+DT = 27
+SW = 22 #THE BUTTON
+
+
+#2e9f2738-4bf3-4b61-b2a6-aab341e2c2e7
+#2e9f2738-4bf3-4b61-b2a6-aab341e2c2e7_answer.wav
 
 
 def read_battery_soc(bus, address=0x32):
@@ -299,6 +316,51 @@ def triggered_function():
   isProcessing = False
 
 
+with open(projectFolder + promptsFile, 'r') as file:
+    items = json.load(file)['prompts']
+
+
+def tellpos():
+    global current_item, currentFile, canread
+
+
+
+    current_item %= len(items)  # Ensure the current_item index wraps around
+    currentFile = projectFolder + "init_audios/" + items[current_item]['id'] + "_select.wav"
+    print("Selected:", currentFile)
+    print("current_item:", current_item)
+    print("character selected:", items[current_item]['character'])
+    playsound(currentFile)
+
+def cwTurn():
+    global current_item
+    current_item += 1
+    print("CW Turn")
+    tellpos()
+
+def ccwTurn():
+    global current_item
+    current_item -= 1
+    print("CCW Turn")
+    tellpos()
+
+def buttonPushed():
+    print("Button Pushed")
+    triggered_function()
+
+def valueChanged(count):
+    print(count)
+
+
+## Initialise (clk, dt, sw, ticks)
+obj = rotary.Rotary(CLK,DT,SW,2)
+
+obj.register(increment=cwTurn, decrement=ccwTurn)
+obj.register(pressed=buttonPushed, onchange=valueChanged)
+obj.start()
+
+
+
 
 if __name__ == "__main__":
     print("initializing persona camera")
@@ -312,20 +374,11 @@ if __name__ == "__main__":
     else:
         print("Could not read battery SOC.")
 
-    justTalk( simpleMSG("Write me a 10 words very short message in cockney english that informs that we are connected to the internet and ready to start shooting photographs") + f", and my battery SOC is: {battery_soc:.2f}%"  , initialVoice)
+    justTalk( simpleMSG("Write me a 10 words very very funny message in english or spanish that informs that we are connected to the internet and ready to start shooting photographs") + f", and my battery SOC is: {battery_soc:.2f}%"  , initialVoice)
 
-    GPIO.setmode(GPIO.BCM)  # Use Broadcom pin numbering
-    GPIO.setup(SW, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Button to GPIO17
 try:
+    # Keep your main program running
     while True:
-      button_state = GPIO.input(SW)
-      if button_state == False and isProcessing == False:  # Button is pressed
-        triggered_function()
-        time.sleep(0.05)  # Add a small delay to debounce
-except KeyboardInterrupt:
-  print("Program stopped by User")
-except Exception as e:
-  print("An error occurred:", e)
+        time.sleep(0.1)  # Reduces CPU load
 finally:
-  GPIO.cleanup()  # This ensures a clean exit
-#end
+    GPIO.cleanup()  # Clean up GPIO on exit

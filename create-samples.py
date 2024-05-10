@@ -47,7 +47,11 @@ promptsFile = 'prompts.json'
 def saveTalk(str, voice_id):
   audiogen = generate(text=str, voice=voice_id)
   print(f"playing {str} \n\n")
-  input_audio_path = projectFolder + "init_audios/" + voice_id + '_select.wav'
+  
+  audio_id = str.replace(' ', '-')
+  audio_id = audio_id.lower()
+  
+  input_audio_path = projectFolder + "init_audios/" + audio_id + '_select.wav'
   play(audiogen)
   save(audiogen,input_audio_path)
 

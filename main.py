@@ -327,11 +327,13 @@ with open(projectFolder + promptsFile, 'r') as file:
 
 def tellpos():
     global current_item, currentFile, canread
-
-
-
+    
     current_item %= len(items)  # Ensure the current_item index wraps around
-    currentFile = projectFolder + "init_audios/" + items[current_item]['id'] + "_select.wav"
+    
+    audio_id = items[current_item]['character'].replace(' ', '-')
+    audio_id = audio_id.lower()
+
+    currentFile = projectFolder + "init_audios/" + audio_id + "_select.wav"
     print("Selected:", currentFile)
     print("current_item:", current_item)
     print("character selected:", items[current_item]['character'])

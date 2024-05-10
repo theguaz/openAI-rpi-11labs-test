@@ -167,6 +167,7 @@ def getImageInfo(image_path, thePrompt):
       "Content-Type": "application/json",
       "Authorization": f"Bearer {api_key}"
     }
+    thePromptEncoded = thePrompt.encode('utf-8')
     payload = {
       "model": "gpt-4-vision-preview",
       "messages": [
@@ -175,7 +176,7 @@ def getImageInfo(image_path, thePrompt):
           "content": [
             {
               "type": "text",
-              "text": thePrompt
+              "text": thePromptEncoded
             },
             {
               "type": "image_url",
@@ -264,6 +265,7 @@ def justTalk(str, voice_id):
 
 
 def simpleMSG(thePrompt):
+    thePromptEncoded = thePrompt.encode('utf-8')
     headers = {
       "Content-Type": "application/json",
       "Authorization": f"Bearer {api_key}"
@@ -276,7 +278,7 @@ def simpleMSG(thePrompt):
             "content": [
               {
                 "type": "text",
-                "text": thePrompt
+                "text": thePromptEncoded
               }
             ]
           }

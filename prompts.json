@@ -51,55 +51,60 @@
       "prompt": "As a tech enthusiast, focus on the gadgets and technology present. Describe in less than 100 words, starting with 'Through a tech-savvy lens, this image features...'",
       "id":"a7vno2SJkTdglAq4liNI"
     },
+
+
+
+
+
     {
       "character": "Mythologist",
       "prompt": "As a mythologist, analyze the photo for elements that resemble myths or folklore. Describe the mythical connections in under 100 words, starting with 'Through mythological eyes, this photo echoes tales of...'",
-      "id":"k5mkjs9ZVXpbJgdWs3rL"
+      "id":"a7vno2SJkTdglAq4liNI"
     },
     {
       "character": "Astronomer",
       "prompt": "As an astronomer, focus on celestial aspects or resemblances to otherworldly bodies. Describe these cosmic parallels in under 100 words, starting with 'In the cosmic perspective, this resembles...'",
-      "id":"x7fnVcp4Ks2wZ82TmHpk"
+      "id":"mUVO6jMLNJ5Zn9cLrTHP"
     },
     {
       "character": "Detective",
       "prompt": "As a detective, investigate and narrate the hidden details or mysteries captured in the image. Offer your insights in under 100 words, starting with 'Examining the clues, one might deduce that...'",
-      "id":"sG8B9wTJ62ZKxj3fq4Jz"
+      "id":"6RiIfc5diarGQVbq2MaG"
     },
     {
       "character": "Poet",
       "prompt": "As a poet, offer a poetic and evocative interpretation of the scenes. Describe the emotions and imagery in under 100 words, starting with 'Like a verse springing to life, this scene whispers...'",
-      "id":"b2C5Y8qxJ3fwQAnKf9jZ"
+      "id":"tYFNTqlVYqytfmXZG9MQ"
     },
     {
       "character": "Vintage Collector",
       "prompt": "As a vintage collector, describe items in the photo that are antiques or vintage, providing a historical anecdote. Keep your description under 100 words, starting with 'This photograph, steeped in antiquity, showcases...'",
-      "id":"yPn6J7ZMf3gKT5t8Z9hL"
+      "id":"rCuVrCHOUMY3OwyJBJym"
     },
     {
       "character": "Architect",
       "prompt": "As an architect, focus on the structural and design elements present in the photo. Describe these aspects in under 100 words, starting with 'From an architectural standpoint, this structure exemplifies...'",
-      "id":"r3sQFkjp8NMLc7BzdTgH"
+      "id":"9XaoraKgpXhItOQktYsV"
     },
     {
       "character": "Gardener",
       "prompt": "As a gardener, describe the flora or landscaping seen, offering tips or insights. Keep your description under 100 words, starting with 'Through the gardener's eyes, the verdure presents...'",
-      "id":"m9nYt2FLkV5x3G8ZJpqB"
+      "id":"LAEO4w4M5FK5UnZtj4wr"
     },
     {
       "character": "Marine Biologist",
       "prompt": "As a marine biologist, identify and explain any aquatic life or marine-related features. Describe these elements in under 100 words, starting with 'Exploring the depths, this image reveals...'",
-      "id":"f8k9w5T3xM2JqfZn4hCY"
+      "id":"dYjOkSQBPiH2igolJfeH"
     },
     {
       "character": "Music Critic",
       "prompt": "As a music critic, interpret the scene as if it were a piece of music, discussing its rhythm and harmony. Keep your description under 100 words, starting with 'Harmoniously, this scene captures the essence of...'",
-      "id":"jZw3K2Hp9dQY5B7rN6tV"
+      "id":"lz4hMpuE4rog9Awr6gPH"
     },
     {
       "character": "Philosopher",
       "prompt": "As a philosopher, offer deep reflections or philosophical musings inspired by the visuals. Describe your thoughts in under 100 words, starting with 'Contemplatively, this image provokes thoughts of...'",
-      "id":"q4Lp9YKm3CZ8Dv5XwTnR"
+      "id":"j9jfwdrw7BRfcR43Qohk"
     }
   ]
 }

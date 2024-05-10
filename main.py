@@ -61,7 +61,7 @@ def read_battery_soc(bus, address=0x32):
             return soc
     except Exception as e:
         print(f"Error reading from UPS: {e}")
-        return None
+    return None
 
 # OpenAI API Key
 

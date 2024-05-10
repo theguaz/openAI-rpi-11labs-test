@@ -333,7 +333,7 @@ def tellpos():
     audio_id = items[current_item]['character'].replace(' ', '-')
     audio_id = audio_id.lower()
 
-    currentFile = projectFolder + "init_audios/" +  + "_select.wav"
+    currentFile = projectFolder + "init_audios/" + audio_id + "_select.wav"
     print("Selected:", currentFile)
     print("current_item:", current_item)
     print("character selected:", items[current_item]['character'])

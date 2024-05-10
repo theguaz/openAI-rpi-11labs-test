@@ -167,7 +167,6 @@ def getImageInfo(image_path, thePrompt):
       "Content-Type": "application/json",
       "Authorization": f"Bearer {api_key}"
     }
-    thePromptEncoded = thePrompt.encode('utf-8')
     payload = {
       "model": "gpt-4-vision-preview",
       "messages": [
@@ -176,7 +175,7 @@ def getImageInfo(image_path, thePrompt):
           "content": [
             {
               "type": "text",
-              "text": thePromptEncoded
+              "text": thePrompt
             },
             {
               "type": "image_url",
@@ -246,7 +245,8 @@ def process_image(filename, uuidID, prompt, voiceID):
   write_text_on_image(filename, logInfo)
   save_log(logInfo)
   print("generating audio with elevenLabs")
-  audiogen = generate(text =  info, voice=voiceID)
+  encodedSTR = info.encode('utf-8')
+  audiogen = generate(text =  encodedSTR, voice=voiceID)
 
   nameOf = uuidID
   
@@ -259,13 +259,13 @@ def process_image(filename, uuidID, prompt, voiceID):
 
 
 def justTalk(str, voice_id):
-  audiogen = generate(text =  str, voice=voice_id)
+  encodedSTR = str.encode('utf-8')
+  audiogen = generate(text =  encodedSTR, voice=voice_id)
   print(f"playing {str} \n\n")
   play(audiogen,)
 
 
 def simpleMSG(thePrompt):
-    thePromptEncoded = thePrompt.encode('utf-8')
     headers = {
       "Content-Type": "application/json",
       "Authorization": f"Bearer {api_key}"
@@ -278,7 +278,7 @@ def simpleMSG(thePrompt):
             "content": [
               {
                 "type": "text",
-                "text": thePromptEncoded
+                "text": thePrompt
               }
             ]
           }
@@ -335,7 +335,7 @@ def tellpos():
     audio_id = items[current_item]['character'].replace(' ', '-')
     audio_id = audio_id.lower()
 
-    currentFile = projectFolder + "init_audios/" + audio_id + "_select.wav"
+    currentFile = projectFolder + "init_audios/" +  + "_select.wav"
     print("Selected:", currentFile)
     print("current_item:", current_item)
     print("character selected:", items[current_item]['character'])

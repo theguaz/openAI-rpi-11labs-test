@@ -150,9 +150,9 @@ def write_text_on_image(image_path, text, position=(10, 10), font_size=5, font_c
 
             # Load a font
             #font = ImageFont.truetype("arial.ttf", font_size)
-
+            texto_codificado = text.encode('utf-8')
             # Add text to image
-            draw.text(position, text, fill=font_color)
+            draw.text(position, texto_codificado, fill=font_color)
 
             # Save the image
             img.save(image_path)
@@ -245,8 +245,7 @@ def process_image(filename, uuidID, prompt, voiceID):
   write_text_on_image(filename, logInfo)
   save_log(logInfo)
   print("generating audio with elevenLabs")
-  encodedSTR = info.encode('utf-8')
-  audiogen = generate(text =  encodedSTR, voice=voiceID)
+  audiogen = generate(text =  info, voice=voiceID)
 
   nameOf = uuidID
   
@@ -259,8 +258,7 @@ def process_image(filename, uuidID, prompt, voiceID):
 
 
 def justTalk(str, voice_id):
-  encodedSTR = str.encode('utf-8')
-  audiogen = generate(text =  encodedSTR, voice=voice_id)
+  audiogen = generate(text =  str, voice=voice_id)
   print(f"playing {str} \n\n")
   play(audiogen,)
 
